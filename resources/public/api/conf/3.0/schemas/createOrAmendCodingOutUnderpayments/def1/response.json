@@ -1,5 +1,4 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema#",
   "title": "Create or Amend Coding Out underpayment and debt amounts",
   "description": "Create or Amend Coding Out underpayment and debt amounts",
   "type": "object",

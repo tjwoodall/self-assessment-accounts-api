@@ -1,5 +1,4 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema#",
   "title": "Retrieve Coding Out underpayment and debt amounts",
   "description": "Retrieve Coding Out underpayment and debt amounts",
   "type": "object",

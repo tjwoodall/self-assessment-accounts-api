@@ -1,5 +1,4 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema#",
   "title": "Retrieve coding details",
   "description": "An Object containing coding details",
   "type": "array",
