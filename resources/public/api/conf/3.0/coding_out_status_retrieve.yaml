@@ -46,8 +46,7 @@ get:
             $ref: "./schemas/retrieveCodingOutStatus/def1/response.json"
           examples:
             Request:
-              value:
-                $ref: "./examples/retrieveCodingOutStatus/def1/response.json"
+              externalValue: "./examples/retrieveCodingOutStatus/def1/response.json"
 
     "400":
       description: Bad request

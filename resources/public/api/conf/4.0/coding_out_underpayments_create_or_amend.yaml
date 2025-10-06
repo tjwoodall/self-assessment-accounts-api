@@ -35,8 +35,7 @@ requestBody:
       examples:
         example-1:
           description: Default Example
-          value:
-            $ref: './examples/createOrAmendCodingOutUnderpayments/def1/request.json'
+          externalValue: './examples/createOrAmendCodingOutUnderpayments/def1/request.json'
 
 responses:
   "204":

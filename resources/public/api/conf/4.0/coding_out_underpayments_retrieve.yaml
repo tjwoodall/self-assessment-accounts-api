@@ -47,8 +47,7 @@ responses:
           $ref: "./schemas/retrieveCodingOutUnderpayments/def1/response.json"
         examples:
           Request:
-            value:
-              $ref: "./examples/retrieveCodingOutUnderpayments/def1/response.json"
+            externalValue: "./examples/retrieveCodingOutUnderpayments/def1/response.json"
 
   "400":
     description: Bad request
