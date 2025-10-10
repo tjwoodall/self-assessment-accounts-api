@@ -243,8 +243,7 @@
       "originalAmount",
       "outstandingAmount",
       "isChargeEstimate",
-      "isCodedOut",
-      "chargeHasMultipleItems"
+      "isCodedOut"
     ]
   }
 }
