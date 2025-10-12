@@ -36,8 +36,7 @@
               "id",
               "amount"
             ]
-          },
-          "additionalItems": false
+          }
         },
         "selfAssessmentUnderpayment": {
           "type": "array",
@@ -67,8 +66,7 @@
               "id",
               "amount"
             ]
-          },
-          "additionalItems": false
+          }
         },
         "debt": {
           "type": "array",
@@ -98,8 +96,7 @@
               "id",
               "amount"
             ]
-          },
-          "additionalItems": false
+          }
         },
         "inYearAdjustment": {
           "type": "object",
