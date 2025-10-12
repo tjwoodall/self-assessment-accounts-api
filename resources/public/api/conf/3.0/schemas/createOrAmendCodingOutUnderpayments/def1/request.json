@@ -20,7 +20,7 @@
                 "multipleOf": 1,
                 "minimum": 1,
                 "maximum": 999999999999999,
-                "example": "1234567890"
+                "example": 1234567890
               },
               "amount": {
                 "description": "The total coded out amount attributed to PAYE underpayments. The value must be between 0 and 99999999999.99.",
@@ -28,7 +28,7 @@
                 "multipleOf": 0.01,
                 "minimum": 0.00,
                 "maximum": 99999999999.99,
-                "example": "1000.25"
+                "example": 1000.25
               }
             },
             "additionalProperties": false,
@@ -36,8 +36,7 @@
               "id",
               "amount"
             ]
-          },
-          "additionalItems": false
+          }
         },
         "selfAssessmentUnderpayment": {
           "type": "array",
@@ -51,7 +50,7 @@
                 "multipleOf": 1,
                 "minimum": 1,
                 "maximum": 999999999999999,
-                "example": "1234567890"
+                "example": 1234567890
               },
               "amount": {
                 "description": "The total coded out amount attributed to Self Assessment underpayments. The value must be between 0 and 99999999999.99.",
@@ -59,7 +58,7 @@
                 "multipleOf": 0.01,
                 "minimum": 0.00,
                 "maximum": 99999999999.99,
-                "example": "1000.25"
+                "example": 1000.25
               }
             },
             "additionalProperties": false,
@@ -67,8 +66,7 @@
               "id",
               "amount"
             ]
-          },
-          "additionalItems": false
+          }
         },
         "debt": {
           "type": "array",
@@ -82,7 +80,7 @@
                 "multipleOf": 1,
                 "minimum": 1,
                 "maximum": 999999999999999,
-                "example": "1234567890"
+                "example": 1234567890
               },
               "amount": {
                 "description": "The total coded out amount attributed to HMRC classified debts. The value must be between 0 and 99999999999.99.",
@@ -90,7 +88,7 @@
                 "multipleOf": 0.01,
                 "minimum": 0.00,
                 "maximum": 99999999999.99,
-                "example": "1000.25"
+                "example": 1000.25
               }
             },
             "additionalProperties": false,
@@ -98,8 +96,7 @@
               "id",
               "amount"
             ]
-          },
-          "additionalItems": false
+          }
         },
         "inYearAdjustment": {
           "type": "object",
@@ -111,7 +108,7 @@
               "multipleOf": 1,
               "minimum": 1,
               "maximum": 999999999999999,
-              "example": "1234567890"
+              "example": 1234567890
             },
             "amount": {
               "description": "The total coded out amount attributed to in-year tax code adjustments to collect underpayments or debts. The value must be between 0 and 99999999999.99.",
@@ -119,7 +116,7 @@
               "multipleOf": 0.01,
               "minimum": 0.00,
               "maximum": 99999999999.99,
-              "example": "1000.25"
+              "example": 1000.25
             }
           },
           "additionalProperties": false,
