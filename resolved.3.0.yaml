@@ -203,8 +203,8 @@ paths:
                           deprecated: true
                         changeTimestamp:
                           type: string
-                          description: "[Test only] The timestamp the charge was changed,\
-                            \ in the format: YYYY-MM-DDThh:mm:ss.SSSZ"
+                          description: "The timestamp the charge was changed, in the\
+                            \ format: YYYY-MM-DDThh:mm:ss.SSSZ"
                           format: date-time
                           example: 2018-04-05T14:15:22.802Z
                         changeReason:
@@ -561,8 +561,8 @@ paths:
                           deprecated: true
                         changeTimestamp:
                           type: string
-                          description: "[Test only] The timestamp the charge was changed,\
-                            \ in the format: YYYY-MM-DDThh:mm:ss.SSSZ"
+                          description: "The timestamp the charge was changed, in the\
+                            \ format: YYYY-MM-DDThh:mm:ss.SSSZ"
                           format: date-time
                           example: 2018-04-05T14:15:22.802Z
                         changeReason:
@@ -920,8 +920,8 @@ paths:
                           deprecated: true
                         changeTimestamp:
                           type: string
-                          description: "[Test only] The timestamp the charge was changed,\
-                            \ in the format: YYYY-MM-DDThh:mm:ss.SSSZ"
+                          description: "The timestamp the charge was changed, in the\
+                            \ format: YYYY-MM-DDThh:mm:ss.SSSZ"
                           format: date-time
                           example: 2018-04-05T14:15:22.802Z
                         changeReason:
@@ -3578,8 +3578,8 @@ components:
                 deprecated: true
               changeTimestamp:
                 type: string
-                description: "[Test only] The timestamp the charge was changed, in\
-                  \ the format: YYYY-MM-DDThh:mm:ss.SSSZ"
+                description: "The timestamp the charge was changed, in the format:\
+                  \ YYYY-MM-DDThh:mm:ss.SSSZ"
                 format: date-time
                 example: 2018-04-05T14:15:22.802Z
               changeReason:
