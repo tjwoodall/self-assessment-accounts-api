@@ -203,8 +203,8 @@ paths:
                           deprecated: true
                         changeTimestamp:
                           type: string
-                          description: "[Test only] The timestamp the charge was changed,\
-                            \ in the format: YYYY-MM-DDThh:mm:ss.SSSZ"
+                          description: "The timestamp the charge was changed, in the\
+                            \ format: YYYY-MM-DDThh:mm:ss.SSSZ"
                           format: date-time
                           example: 2018-04-05T14:15:22.802Z
                         changeReason:
@@ -561,8 +561,8 @@ paths:
                           deprecated: true
                         changeTimestamp:
                           type: string
-                          description: "[Test only] The timestamp the charge was changed,\
-                            \ in the format: YYYY-MM-DDThh:mm:ss.SSSZ"
+                          description: "The timestamp the charge was changed, in the\
+                            \ format: YYYY-MM-DDThh:mm:ss.SSSZ"
                           format: date-time
                           example: 2018-04-05T14:15:22.802Z
                         changeReason:
@@ -920,8 +920,8 @@ paths:
                           deprecated: true
                         changeTimestamp:
                           type: string
-                          description: "[Test only] The timestamp the charge was changed,\
-                            \ in the format: YYYY-MM-DDThh:mm:ss.SSSZ"
+                          description: "The timestamp the charge was changed, in the\
+                            \ format: YYYY-MM-DDThh:mm:ss.SSSZ"
                           format: date-time
                           example: 2018-04-05T14:15:22.802Z
                         changeReason:
@@ -1988,8 +1988,8 @@ paths:
                                 example: true
                               codedOutStatus:
                                 type: string
-                                description: "[Test only] Indicates whether an amount\
-                                  \ has been coded out through the PAYE system."
+                                description: Indicates whether an amount has been
+                                  coded out through the PAYE system.
                                 example: initiated
                                 enum:
                                 - initiated
@@ -3565,8 +3565,8 @@ components:
                 deprecated: true
               changeTimestamp:
                 type: string
-                description: "[Test only] The timestamp the charge was changed, in\
-                  \ the format: YYYY-MM-DDThh:mm:ss.SSSZ"
+                description: "The timestamp the charge was changed, in the format:\
+                  \ YYYY-MM-DDThh:mm:ss.SSSZ"
                 format: date-time
                 example: 2018-04-05T14:15:22.802Z
               changeReason:
@@ -4250,8 +4250,8 @@ components:
                       example: true
                     codedOutStatus:
                       type: string
-                      description: "[Test only] Indicates whether an amount has been\
-                        \ coded out through the PAYE system."
+                      description: Indicates whether an amount has been coded out
+                        through the PAYE system.
                       example: initiated
                       enum:
                       - initiated
@@ -5062,8 +5062,8 @@ components:
                   example: true
                 codedOutStatus:
                   type: string
-                  description: "[Test only] Indicates whether an amount has been coded\
-                    \ out through the PAYE system."
+                  description: Indicates whether an amount has been coded out through
+                    the PAYE system.
                   example: initiated
                   enum:
                   - initiated
@@ -5204,8 +5204,8 @@ components:
             example: true
           codedOutStatus:
             type: string
-            description: "[Test only] Indicates whether an amount has been coded out\
-              \ through the PAYE system."
+            description: Indicates whether an amount has been coded out through the
+              PAYE system.
             example: initiated
             enum:
             - initiated

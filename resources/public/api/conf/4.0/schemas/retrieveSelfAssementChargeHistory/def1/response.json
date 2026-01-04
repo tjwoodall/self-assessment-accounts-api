@@ -47,7 +47,7 @@
             "deprecated": true
           },
           "changeTimestamp": {
-            "description": "[Test only] The timestamp the charge was changed, in the format: YYYY-MM-DDThh:mm:ss.SSSZ",
+            "description": "The timestamp the charge was changed, in the format: YYYY-MM-DDThh:mm:ss.SSSZ",
             "type": "string",
             "format": "date-time",
             "example": "2018-04-05T14:15:22.802Z"
