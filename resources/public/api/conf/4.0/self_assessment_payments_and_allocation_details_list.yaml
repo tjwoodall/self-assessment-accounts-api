@@ -48,8 +48,7 @@ get:
             $ref: "schemas/listSelfAssessmentPaymentsAndAllocationDetails/def1/response.json"
           examples:
             Request:
-              value:
-                $ref: "examples/listSelfAssessmentPaymentsAndAllocationDetails/def1/response.json"
+              externalValue: "examples/listSelfAssessmentPaymentsAndAllocationDetails/def1/response.json"
 
     400:
       description: Bad request
