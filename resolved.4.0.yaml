@@ -2770,25 +2770,14 @@ paths:
         - read:self-assessment
   /accounts/self-assessment/{nino}/{taxYear}/collection/tax-code:
     get:
-      summary: Retrieve Coding Out Underpayments and Debt Amounts
-      parameters:
-      - name: source
-        in: query
-        description: |
-          Specifies the source of data to be returned. If source is not provided, the latest values will be returned.<p> Limited to the following possible values: <ul><li>`hmrcHeld`<li>`user`<li>`latest`</p>
-        required: false
-        schema:
-          type: string
       security:
       - User-Restricted:
         - read:self-assessment
     put:
-      summary: Create or Amend Coding Out Underpayments and Debt Amounts
       security:
       - User-Restricted:
         - write:self-assessment
     delete:
-      summary: Delete Coding Out Underpayments and Debt Amounts
       security:
       - User-Restricted:
         - write:self-assessment
@@ -5395,14 +5384,6 @@ components:
       schema:
         type: string
         example: "000001"
-    source:
-      name: source
-      in: query
-      description: |
-        Specifies the source of data to be returned. If source is not provided, the latest values will be returned.<p> Limited to the following possible values: <ul><li>`hmrcHeld`<li>`user`<li>`latest`</p>
-      required: false
-      schema:
-        type: string
     codingOutTaxYear:
       name: taxYear
       in: path
