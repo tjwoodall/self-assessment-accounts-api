@@ -232,16 +232,7 @@ paths:
               examples:
                 Request:
                   value:
-                    chargeHistoryDetails: &ref_13
-                      - taxYear: 2022-23
-                        transactionId: X123456790A
-                        transactionDate: '2018-04-05'
-                        description: POA1, Balancing charge
-                        totalAmount: 600
-                        changeDate: '2018-04-05'
-                        changeTimestamp: '2018-04-05T14:15:22.802Z'
-                        changeReason: Amended return, Customer Request
-                        poaAdjustmentReason: '004'
+                    $ref: ./examples/retrieveSelfAssementChargeHistory/def1/response.json
         '400':
           description: Bad request
           headers:
@@ -292,20 +283,20 @@ paths:
                 FORMAT_NINO:
                   description: |
                     The format of the supplied nino value is invalid.
-                  value: &ref_14
+                  value: &ref_13
                     code: FORMAT_NINO
                     message: The format of the supplied nino value is invalid.
                 FORMAT_TRANSACTION_ID:
                   description: |
                     The format of the supplied transaction identifier field is not valid.
-                  value: &ref_15
+                  value: &ref_14
                     code: FORMAT_TRANSACTION_ID
                     message: The format of the supplied transaction identifier field is not valid0
                 RULE_INCORRECT_GOV_TEST_SCENARIO:
                   description: |
                     The request did not match any available Sandbox data. Check that the supplied Gov-Test-Scenario is correct for 
                     this endpoint version. This error will only be returned in the Sandbox environment.
-                  value: &ref_16
+                  value: &ref_15
                     code: RULE_INCORRECT_GOV_TEST_SCENARIO
                     message: The supplied Gov-Test-Scenario is not valid
         '403':
@@ -351,7 +342,7 @@ paths:
                 CLIENT_OR_AGENT_NOT_AUTHORISED:
                   description: |
                     'The client or agent is not authorised. This is because: the client is not enrolled for MTD, the agent is not enrolled for Agent Services, the client has not authorised the agent to act on their behalf, or the Authorization token provided is not correct.'
-                  value: &ref_17
+                  value: &ref_16
                     code: CLIENT_OR_AGENT_NOT_AUTHORISED
                     message: 'The client or agent is not authorised. This is because: the client is not enrolled for MTD, the agent is not enrolled for Agent Services, the client has not authorised the agent to act on their behalf, or the Authorization token provided is not correct.'
         '404':
@@ -397,7 +388,7 @@ paths:
                 NOT_FOUND:
                   description: |
                     Matching resource not found.
-                  value: &ref_18
+                  value: &ref_17
                     code: MATCHING_RESOURCE_NOT_FOUND
                     message: Matching resource not found
   /accounts/self-assessment/{nino}/charges/transactionId/{transactionId}:
@@ -497,7 +488,7 @@ paths:
               examples:
                 Request:
                   value:
-                    chargeHistoryDetails: *ref_13
+                    $ref: ./examples/retrieveSelfAssementChargeHistory/def1/response.json
         '400':
           description: Bad request
           headers:
@@ -541,16 +532,16 @@ paths:
                 FORMAT_NINO:
                   description: |
                     The format of the supplied nino value is invalid.
-                  value: *ref_14
+                  value: *ref_13
                 FORMAT_TRANSACTION_ID:
                   description: |
                     The format of the supplied transaction identifier field is not valid.
-                  value: *ref_15
+                  value: *ref_14
                 RULE_INCORRECT_GOV_TEST_SCENARIO:
                   description: |
                     The request did not match any available Sandbox data. Check that the supplied Gov-Test-Scenario is correct for 
                     this endpoint version. This error will only be returned in the Sandbox environment.
-                  value: *ref_16
+                  value: *ref_15
         '403':
           description: Forbidden
           headers:
@@ -594,7 +585,7 @@ paths:
                 CLIENT_OR_AGENT_NOT_AUTHORISED:
                   description: |
                     'The client or agent is not authorised. This is because: the client is not enrolled for MTD, the agent is not enrolled for Agent Services, the client has not authorised the agent to act on their behalf, or the Authorization token provided is not correct.'
-                  value: *ref_17
+                  value: *ref_16
         '404':
           description: Not found
           headers:
@@ -638,7 +629,7 @@ paths:
                 NOT_FOUND:
                   description: |
                     Matching resource not found.
-                  value: *ref_18
+                  value: *ref_17
   /accounts/self-assessment/{nino}/charges/chargeReference/{chargeReference}:
     get:
       summary: Retrieve History of a Self Assessment Charge by Charge Reference
@@ -738,7 +729,7 @@ paths:
               examples:
                 Request:
                   value:
-                    chargeHistoryDetails: *ref_13
+                    $ref: ./examples/retrieveSelfAssementChargeHistory/def1/response.json
         '400':
           description: Bad request
           headers:
@@ -782,7 +773,7 @@ paths:
                 FORMAT_NINO:
                   description: |
                     The format of the supplied nino value is invalid.
-                  value: *ref_14
+                  value: *ref_13
                 FORMAT_CHARGE_REFERENCE:
                   description: |
                     The format of the supplied charge reference is not valid.
@@ -793,7 +784,7 @@ paths:
                   description: |
                     The request did not match any available Sandbox data. Check that the supplied Gov-Test-Scenario is correct for 
                     this endpoint version. This error will only be returned in the Sandbox environment.
-                  value: *ref_16
+                  value: *ref_15
         '403':
           description: Forbidden
           headers:
@@ -837,7 +828,7 @@ paths:
                 CLIENT_OR_AGENT_NOT_AUTHORISED:
                   description: |
                     'The client or agent is not authorised. This is because: the client is not enrolled for MTD, the agent is not enrolled for Agent Services, the client has not authorised the agent to act on their behalf, or the Authorization token provided is not correct.'
-                  value: *ref_17
+                  value: *ref_16
         '404':
           description: Not found
           headers:
@@ -881,7 +872,7 @@ paths:
                 NOT_FOUND:
                   description: |
                     Matching resource not found.
-                  value: *ref_18
+                  value: *ref_17
   /accounts/self-assessment/{nino}/balance-and-transactions:
     get:
       summary: Retrieve Self Assessment Balance and Transactions
@@ -919,14 +910,14 @@ paths:
         - name: fromDate
           in: query
           description: The inclusive start date of the period to filter payments. The maximum date range between fromDate and toDate should not exceed 732 days.
-          schema: &ref_19
+          schema: &ref_18
             type: string
             example: '2019-01-02'
           required: false
         - name: toDate
           in: query
           description: The inclusive end date of the period to filter payments. The maximum date range between fromDate and toDate should not exceed 732 days.
-          schema: &ref_20
+          schema: &ref_19
             type: string
             example: '2019-01-02'
           required: false
@@ -1615,109 +1606,7 @@ paths:
               examples:
                 Request:
                   value:
-                    balanceDetails:
-                      payableAmount: -99999999999.99
-                      payableDueDate: '1920-02-29'
-                      pendingChargeDueAmount: -99999999999.99
-                      pendingChargeDueDate: '1920-02-29'
-                      overdueAmount: -99999999999.99
-                      bcdBalancePerYear:
-                        - taxYear: 2022-23
-                          bcdAmount: 1300.12
-                        - taxYear: 2020-21
-                          bcdAmount: 1600.12
-                      earliestPaymentDateOverdue: '1920-02-29'
-                      totalBalance: -99999999999.99
-                      amountCodedOut: 3456.67
-                      totalBcdBalance: 2600.24
-                      unallocatedCredit: 3456.67
-                      allocatedCredit: 2345.67
-                      totalCredit: 4567.67
-                      firstPendingAmountRequested: 1234.67
-                      secondPendingAmountRequested: 3100.67
-                      availableCredit: 1212.67
-                    codingDetails:
-                      - returnTaxYear: 2020-21
-                        totalLiabilityAmount: 5009.99
-                        codingTaxYear: 2020-21
-                        coded:
-                          charge: 5009.99
-                          initiationDate: '2021-04-05'
-                    documentDetails:
-                      - taxYear: 2020-21
-                        documentId: '1455'
-                        formBundleNumber: '88888888'
-                        creditReason: Voluntary Payment
-                        documentDate: '2018-04-05'
-                        documentText: ITSA- Bal Charge
-                        documentDueDate: '2021-04-05'
-                        documentDescription: ITSA- POA 1
-                        originalAmount: 5009.99
-                        outstandingAmount: 5009.99
-                        lastClearing:
-                          lastClearingDate: '2018-04-05'
-                          lastClearingReason: Incoming Payment
-                          lastClearedAmount: 5009.99
-                        isChargeEstimate: true
-                        isCodedOut: true
-                        paymentLot: AB1023456789
-                        paymentLotItem: '000001'
-                        effectiveDateOfPayment: '2021-04-05'
-                        latePaymentInterest:
-                          latePaymentInterestId: '1234567890123456'
-                          accruingInterestAmount: 5009.99
-                          interestRate: 5.99
-                          interestStartDate: '2020-04-01'
-                          interestEndDate: '2020-04-05'
-                          interestAmount: 5009.99
-                          interestDunningLockAmount: 5009.99
-                          interestOutstandingAmount: 5009.99
-                        amountCodedOut: 5009.99
-                        reducedCharge:
-                          chargeType: AA
-                          documentNumber: '1234567890123456'
-                          amendmentDate: '2018-04-05'
-                          taxYear: 2017-18
-                        poaRelevantAmount: 8999.98
-                    financialDetails:
-                      - taxYear: 2016-17
-                        chargeDetail:
-                          documentId: '123456789012'
-                          documentType: '1234'
-                          documentTypeDescription: Income Tax Estimate
-                          chargeType: '5678'
-                          chargeTypeDescription: Income Tax Estimate - ITSA
-                        taxPeriodFrom: '2018-08-13'
-                        taxPeriodTo: '2018-08-14'
-                        contractAccount: X
-                        documentNumber: '1040000872'
-                        documentNumberItem: XM00
-                        chargeReference: XM002610011594
-                        originalAmount: 10000
-                        outstandingAmount: 10000
-                        clearedAmount: 10000
-                        accruedInterest: 10000
-                        items:
-                          - itemId: '001'
-                            dueDate: '2018-08-13'
-                            amount: 10000
-                            clearingDate: '2018-08-13'
-                            clearingReason: Outgoing Payment
-                            outgoingPaymentMethod: Payable Order Repayment
-                            locks:
-                              isChargeOnHold: false
-                              isEstimatedChargeOnHold: false
-                              isInterestAccrualOnHold: false
-                              isInterestChargeOnHold: false
-                            isReturn: true
-                            paymentReference: Ab12453535
-                            paymentAmount: 10000
-                            paymentMethod: Payment
-                            paymentLot: '81203010024'
-                            paymentLotItem: '000001'
-                            clearingSAPDocument: '3350000253'
-                            isChargeEstimate: true
-                            codedOutStatus: initiated
+                    $ref: ./examples/retrieveBalanceAndTransactions/def1/fullResponse.json
         '400':
           description: Bad request
           headers:
@@ -1761,7 +1650,7 @@ paths:
                 FORMAT_NINO:
                   description: |
                     The format of the supplied nino value is invalid.
-                  value: *ref_14
+                  value: *ref_13
                 FORMAT_DOC_NUMBER:
                   description: |
                     The format of docNumber is not valid.
@@ -1795,13 +1684,13 @@ paths:
                 FORMAT_FROM_DATE:
                   description: |
                     The format of the fromDate is not valid.
-                  value: &ref_21
+                  value: &ref_20
                     code: FORMAT_FROM_DATE
                     message: The format of the fromDate is not valid.
                 FORMAT_TO_DATE:
                   description: |
                     The format of toDate is not valid.
-                  value: &ref_22
+                  value: &ref_21
                     code: FORMAT_TO_DATE
                     message: The format of toDate is not valid.
                 FORMAT_REMOVE_PAYMENT_ON_ACCOUNT:
@@ -1819,7 +1708,7 @@ paths:
                 RULE_INVALID_DATE_RANGE:
                   description: |
                     The provided date range is not valid.
-                  value: &ref_24
+                  value: &ref_23
                     code: RULE_INVALID_DATE_RANGE
                     message: The provided date range is not valid.
                 RULE_INCONSISTENT_QUERY_PARAMS:
@@ -1831,26 +1720,26 @@ paths:
                 MISSING_TO_DATE:
                   description: |
                     The To date parameter is missing.
-                  value: &ref_25
+                  value: &ref_24
                     code: MISSING_TO_DATE
                     message: The To date parameter is missing.
                 MISSING_FROM_DATE:
                   description: |
                     The From date parameter is missing
-                  value: &ref_26
+                  value: &ref_25
                     code: MISSING_FROM_DATE
                     message: The From date parameter is missing
                 RANGE_TO_DATE_BEFORE_FROM_DATE:
                   description: |
                     The To date must be after the From date.
-                  value: &ref_23
+                  value: &ref_22
                     code: RANGE_TO_DATE_BEFORE_FROM_DATE
                     message: The To date must be after the From date.
                 RULE_INCORRECT_GOV_TEST_SCENARIO:
                   description: |
                     The request did not match any available Sandbox data. Check that the supplied Gov-Test-Scenario is correct for 
                     this endpoint version. This error will only be returned in the Sandbox environment.
-                  value: *ref_16
+                  value: *ref_15
         '403':
           description: Forbidden
           headers:
@@ -1894,7 +1783,7 @@ paths:
                 CLIENT_OR_AGENT_NOT_AUTHORISED:
                   description: |
                     'The client or agent is not authorised. This is because: the client is not enrolled for MTD, the agent is not enrolled for Agent Services, the client has not authorised the agent to act on their behalf, or the Authorization token provided is not correct.'
-                  value: *ref_17
+                  value: *ref_16
         '404':
           description: Not found
           headers:
@@ -1938,7 +1827,7 @@ paths:
                 NOT_FOUND:
                   description: |
                     Matching resource not found.
-                  value: *ref_18
+                  value: *ref_17
   /accounts/self-assessment/{nino}/payments-and-allocations:
     get:
       summary: List Self Assessment Payments & Allocation Details
@@ -1968,12 +1857,12 @@ paths:
         - name: fromDate
           in: query
           description: The inclusive start date of the period to filter payments. The maximum date range between fromDate and toDate should not exceed 732 days.
-          schema: *ref_19
+          schema: *ref_18
           required: false
         - name: toDate
           in: query
           description: The inclusive end date of the period to filter payments. The maximum date range between fromDate and toDate should not exceed 732 days.
-          schema: *ref_20
+          schema: *ref_19
           required: false
         - name: paymentLot
           in: query
@@ -2165,44 +2054,7 @@ paths:
               examples:
                 Request:
                   value:
-                    payments:
-                      - paymentLot: '081203010024'
-                        paymentLotItem: '000001'
-                        paymentReference: '1594'
-                        paymentAmount: 12345678912.02
-                        paymentMethod: A
-                        transactionDate: '2010-02-27'
-                        allocations:
-                          - chargeReference: XM002610011594
-                            periodKey: 16RL
-                            periodKeyDescription: 2016/17 month 12 RTI
-                            startDate: '2010-03-27'
-                            endDate: '2010-06-27'
-                            dueDate: '2010-07-27'
-                            chargeDetail:
-                              documentId: '1040000872'
-                              documentType: '1234'
-                              documentTypeDescription: Income Tax Estimate
-                              chargeType: '5678'
-                              chargeTypeDescription: Income Tax Estimate - ITSA
-                            amount: 12345678912.02
-                            clearedAmount: 345678912.02
-                            contractAccount: ABC
-                          - chargeReference: XM002610011560
-                            periodKey: 16RR
-                            periodKeyDescription: 2016/17 month 10 RTI
-                            startDate: '2010-04-21'
-                            endDate: '2010-09-20'
-                            dueDate: '2010-11-29'
-                            chargeDetail:
-                              documentId: '1040000872'
-                              documentType: '1234'
-                              documentTypeDescription: Income Tax Estimate
-                              chargeType: '5678'
-                              chargeTypeDescription: Income Tax Estimate - ITSA
-                            amount: 12345678999.92
-                            clearedAmount: 345678992.92
-                            contractAccount: ABS
+                    $ref: examples/listSelfAssessmentPaymentsAndAllocationDetails/def1/response.json
         '400':
           description: Bad request
           headers:
@@ -2246,31 +2098,31 @@ paths:
                 FORMAT_NINO:
                   description: |
                     The format of the supplied nino value is invalid.
-                  value: *ref_14
+                  value: *ref_13
                 FORMAT_FROM_DATE:
                   description: |
                     The format of the fromDate is not valid.
-                  value: *ref_21
+                  value: *ref_20
                 FORMAT_TO_DATE:
                   description: |
                     The format of toDate is not valid.
-                  value: *ref_22
+                  value: *ref_21
                 RANGE_TO_DATE_BEFORE_FROM_DATE:
                   description: |
                     The To date must be after the From date.
-                  value: *ref_23
+                  value: *ref_22
                 RULE_INVALID_DATE_RANGE:
                   description: |
                     The provided date range is not valid.
-                  value: *ref_24
+                  value: *ref_23
                 MISSING_TO_DATE:
                   description: |
                     The To date parameter is missing.
-                  value: *ref_25
+                  value: *ref_24
                 MISSING_FROM_DATE:
                   description: |
                     The From date parameter is missing
-                  value: *ref_26
+                  value: *ref_25
                 RULE_INCONSISTENT_QUERY_PARAMS:
                   description: |
                     Provide either paymentLot & paymentLotItem or fromDate & toDate.
@@ -2305,7 +2157,7 @@ paths:
                   description: |
                     The request did not match any available Sandbox data. Check that the supplied Gov-Test-Scenario is correct for 
                     this endpoint version. This error will only be returned in the Sandbox environment.
-                  value: *ref_16
+                  value: *ref_15
         '403':
           description: Forbidden
           headers:
@@ -2349,7 +2201,7 @@ paths:
                 CLIENT_OR_AGENT_NOT_AUTHORISED:
                   description: |
                     'The client or agent is not authorised. This is because: the client is not enrolled for MTD, the agent is not enrolled for Agent Services, the client has not authorised the agent to act on their behalf, or the Authorization token provided is not correct.'
-                  value: *ref_17
+                  value: *ref_16
         '404':
           description: Not found
           headers:
@@ -2393,15 +2245,13 @@ paths:
                 NOT_FOUND:
                   description: |
                     Matching resource not found.
-                  value: *ref_18
+                  value: *ref_17
   /accounts/self-assessment/{nino}/{taxYear}/collection/tax-code:
     get:
-      summary: Retrieve Coding Out Underpayments and Debt Amounts
       security:
         - User-Restricted:
             - read:self-assessment
-      parameters:
-        - $ref: ./common/queryParameters.yaml#/components/parameters/source
+      summary: Retrieve Coding Out Underpayments and Debt Amounts
       description: |
         This endpoint enables you to retrieve HMRC-held coding out underpayments and debt amounts or user submitted amended coding out amounts for a previous tax year and given National Insurance number.
 
@@ -2418,6 +2268,46 @@ paths:
         | STATEFUL                                | Performs a stateful retrieve. <p>Information and data held by HMRC is not available in the sandbox environment.<br> Providing ‘source=hmrcHeld’ will result in the expected HTTP 404 (matching resource not found) error being returned.</p> |
       tags:
         - Coding Out Underpayments and Debts
+      parameters:
+        - name: Accept
+          in: header
+          description: |
+            Specifies the response format and the version of the API to be used.
+          schema: *ref_8
+          required: true
+        - name: Authorization
+          in: header
+          description: |
+            An OAuth 2.0 Bearer Token with the *read:self-assessment* scope.
+          schema: *ref_9
+          required: true
+        - name: Gov-Test-Scenario
+          in: header
+          description: |
+            Only in sandbox environment. See Test Data table for all header values.
+          schema: *ref_10
+          required: false
+        - name: source
+          in: query
+          description: |
+            Specifies the source of data to be returned. If source is not provided, the latest values will be returned.<p> Limited to the following possible values: <ul><li>`hmrcHeld`<li>`user`<li>`latest`</p>
+          schema:
+            type: string
+          required: false
+        - name: nino
+          in: path
+          description: |
+            National Insurance number, in the format `AA999999A`.
+          schema: *ref_6
+          required: true
+        - name: taxYear
+          in: path
+          description: |
+            The tax year the data applies to, for example, 2021-22. The start year and end year must not span two tax years. The minimum tax year is 2021-22. No gaps are allowed, for example, 2020-22 is not valid. (The minimum tax year in Sandbox is 2019-20.)
+          schema: &ref_26
+            type: string
+            example: 2021-22
+          required: true
       responses:
         '200':
           description: Success
@@ -2742,48 +2632,7 @@ paths:
               examples:
                 Request:
                   value:
-                    taxCodeComponents:
-                      selfAssessmentUnderpayment:
-                        - amount: 89.78
-                          relatedTaxYear: 2021-22
-                          submittedOn: '2021-07-06T09:37:17.000Z'
-                          source: user
-                          id: 1234567891
-                      payeUnderpayment:
-                        - amount: 14.45
-                          relatedTaxYear: 2021-22
-                          submittedOn: '2021-07-06T09:37:17.000Z'
-                          source: user
-                          id: 1234567891
-                      debt:
-                        - amount: 12.01
-                          relatedTaxYear: 2021-22
-                          submittedOn: '2021-07-06T09:37:17.000Z'
-                          source: user
-                          id: 1234567891
-                      inYearAdjustment:
-                        amount: 75.99
-                        relatedTaxYear: 2021-22
-                        submittedOn: '2021-07-06T09:37:17.000Z'
-                        source: user
-                        id: 1234567891
-                    unmatchedCustomerSubmissions:
-                      selfAssessmentUnderpayment:
-                        - amount: 12.32
-                          submittedOn: '2021-07-06T09:37:17.000Z'
-                          id: 1234567891
-                      payeUnderpayment:
-                        - amount: 71.99
-                          submittedOn: '2021-07-06T09:37:17.000Z'
-                          id: 1234567891
-                      debt:
-                        - amount: 54.79
-                          submittedOn: '2021-07-06T09:37:17.000Z'
-                          id: 1234567891
-                      inYearAdjustment:
-                        amount: 56.74
-                        submittedOn: '2021-07-06T09:37:17.000Z'
-                        id: 1234567891
+                    $ref: ./examples/retrieveCodingOutUnderpayments/def1/response.json
         '400':
           description: Bad request
           headers:
@@ -2827,7 +2676,7 @@ paths:
                 FORMAT_NINO:
                   description: |
                     The format of the supplied nino value is invalid.
-                  value: *ref_14
+                  value: *ref_13
                 FORMAT_TAX_YEAR:
                   description: |
                     The format of the supplied taxYear value is invalid.
@@ -2856,7 +2705,7 @@ paths:
                   description: |
                     The request did not match any available Sandbox data. Check that the supplied Gov-Test-Scenario is correct for 
                     this endpoint version. This error will only be returned in the Sandbox environment.
-                  value: *ref_16
+                  value: *ref_15
         '403':
           description: Forbidden
           headers:
@@ -2900,7 +2749,7 @@ paths:
                 CLIENT_OR_AGENT_NOT_AUTHORISED:
                   description: |
                     'The client or agent is not authorised. This is because: the client is not enrolled for MTD, the agent is not enrolled for Agent Services, the client has not authorised the agent to act on their behalf, or the Authorization token provided is not correct.'
-                  value: *ref_17
+                  value: *ref_16
         '404':
           description: Not found
           headers:
@@ -2944,18 +2793,18 @@ paths:
                 NOT_FOUND:
                   description: |
                     Matching resource not found.
-                  value: *ref_18
+                  value: *ref_17
                 CODING_OUT_NOT_FOUND:
                   description: |
                     Coding out amounts could not be found for the supplied nino and taxYear.
-                  value: &ref_33
+                  value: &ref_32
                     code: MATCHING_RESOURCE_NOT_FOUND
                     message: Matching resource not found.
     put:
-      summary: Create or Amend Coding Out Underpayments and Debt Amounts
       security:
         - User-Restricted:
             - write:self-assessment
+      summary: Create or Amend Coding Out Underpayments and Debt Amounts
       description: |
         This endpoint enables you to overwrite coding out underpayments and debt amounts held by HMRC for a previous tax year and given National Insurance number, and to amend previously submitted overwrite amounts. <strong>This endpoint can only be used after the tax year has ended.</strong>
 
@@ -2990,7 +2839,7 @@ paths:
           in: header
           description: |
             An OAuth 2.0 Bearer Token with the *write:self-assessment* scope.
-          schema: &ref_31
+          schema: &ref_30
             type: string
             example: Bearer bb7fed3fe10dd235a2ccda3d50fb
           required: true
@@ -3010,9 +2859,7 @@ paths:
           in: path
           description: |
             The tax year the data applies to, for example, 2021-22. The start year and end year must not span two tax years. The minimum tax year is 2021-22. No gaps are allowed, for example, 2020-22 is not valid. (The minimum tax year in Sandbox is 2019-20.)
-          schema: &ref_30
-            type: string
-            example: 2021-22
+          schema: *ref_26
           required: true
       requestBody:
         content:
@@ -3132,19 +2979,7 @@ paths:
               example-1:
                 description: Default Example
                 value:
-                  taxCodeComponents:
-                    payeUnderpayment:
-                      - amount: 2000.5
-                        id: 1234567890
-                    selfAssessmentUnderpayment:
-                      - amount: 1123.45
-                        id: 4657839807
-                    debt:
-                      - amount: 100.25
-                        id: 2134693857
-                    inYearAdjustment:
-                      amount: 123.45
-                      id: 9873562901
+                  $ref: ./examples/createOrAmendCodingOutUnderpayments/def1/request.json
       responses:
         '204':
           description: Success(No Content)
@@ -3221,7 +3056,7 @@ paths:
                 FORMAT_NINO:
                   description: |
                     The format of the supplied nino value is invalid.
-                  value: *ref_14
+                  value: *ref_13
                 FORMAT_TAX_YEAR:
                   description: |
                     The format of the supplied taxYear value is invalid.
@@ -3266,14 +3101,14 @@ paths:
                     message: An empty or non-matching body was submitted.
                 RULE_OUTSIDE_AMENDMENT_WINDOW:
                   description: The request cannot be completed as you are outside the amendment window.
-                  value: &ref_32
+                  value: &ref_31
                     code: RULE_OUTSIDE_AMENDMENT_WINDOW
                     message: You are outside the amendment window
                 RULE_INCORRECT_GOV_TEST_SCENARIO:
                   description: |
                     The request did not match any available Sandbox data. Check that the supplied Gov-Test-Scenario is correct for 
                     this endpoint version. This error will only be returned in the Sandbox environment.
-                  value: *ref_16
+                  value: *ref_15
         '403':
           description: Forbidden
           headers:
@@ -3317,12 +3152,12 @@ paths:
                 CLIENT_OR_AGENT_NOT_AUTHORISED:
                   description: |
                     'The client or agent is not authorised. This is because: the client is not enrolled for MTD, the agent is not enrolled for Agent Services, the client has not authorised the agent to act on their behalf, or the Authorization token provided is not correct.'
-                  value: *ref_17
+                  value: *ref_16
     delete:
-      summary: Delete Coding Out Underpayments and Debt Amounts
       security:
         - User-Restricted:
             - write:self-assessment
+      summary: Delete Coding Out Underpayments and Debt Amounts
       description: |
         This endpoint enables you to delete custom coding out amounts for a given tax year and National Insurance number.
 
@@ -3348,7 +3183,7 @@ paths:
           in: path
           description: |
             The tax year the data applies to, for example, 2021-22. The start year and end year must not span two tax years. The minimum tax year is 2021-22. No gaps are allowed, for example, 2020-22 is not valid. (The minimum tax year in Sandbox is 2019-20.)
-          schema: *ref_30
+          schema: *ref_26
           required: true
         - name: Accept
           in: header
@@ -3360,7 +3195,7 @@ paths:
           in: header
           description: |
             An OAuth 2.0 Bearer Token with the *write:self-assessment* scope.
-          schema: *ref_31
+          schema: *ref_30
           required: true
         - name: Gov-Test-Scenario
           in: header
@@ -3444,7 +3279,7 @@ paths:
                 FORMAT_NINO:
                   description: |
                     The format of the supplied nino value is invalid.
-                  value: *ref_14
+                  value: *ref_13
                 FORMAT_TAX_YEAR:
                   description: |
                     The format of the supplied taxYear value is invalid.
@@ -3459,12 +3294,12 @@ paths:
                   value: *ref_29
                 RULE_OUTSIDE_AMENDMENT_WINDOW:
                   description: The request cannot be completed as you are outside the amendment window.
-                  value: *ref_32
+                  value: *ref_31
                 RULE_INCORRECT_GOV_TEST_SCENARIO:
                   description: |
                     The request did not match any available Sandbox data. Check that the supplied Gov-Test-Scenario is correct for 
                     this endpoint version. This error will only be returned in the Sandbox environment.
-                  value: *ref_16
+                  value: *ref_15
         '403':
           description: Forbidden
           headers:
@@ -3508,7 +3343,7 @@ paths:
                 CLIENT_OR_AGENT_NOT_AUTHORISED:
                   description: |
                     'The client or agent is not authorised. This is because: the client is not enrolled for MTD, the agent is not enrolled for Agent Services, the client has not authorised the agent to act on their behalf, or the Authorization token provided is not correct.'
-                  value: *ref_17
+                  value: *ref_16
         '404':
           description: Not found
           headers:
@@ -3552,7 +3387,7 @@ paths:
                 CODING_OUT_NOT_FOUND:
                   description: |
                     Coding out amounts could not be found for the supplied nino and taxYear.
-                  value: *ref_33
+                  value: *ref_32
   /accounts/self-assessment/{nino}/{taxYear}/collection/tax-code/coding-out/opt-out:
     post:
       summary: Opt Out of Coding Out
@@ -3603,7 +3438,7 @@ paths:
           in: path
           description: |
             The tax year the data applies to, for example, 2021-22. The start year and end year must not span two tax years. No gaps are allowed, for example, 2020-22 is not valid.
-          schema: &ref_34
+          schema: &ref_33
             type: string
             example: 2021-22
           required: true
@@ -3683,7 +3518,7 @@ paths:
                 FORMAT_NINO:
                   description: |
                     The format of the supplied nino value is invalid.
-                  value: *ref_14
+                  value: *ref_13
                 FORMAT_TAX_YEAR:
                   description: |
                     The format of the supplied taxYear value is invalid.
@@ -3691,13 +3526,13 @@ paths:
                 RULE_BUSINESS_PARTNER_NOT_EXIST:
                   description: |
                     The remote endpoint has indicated that business partner does not exist for NINO.
-                  value: &ref_35
+                  value: &ref_34
                     code: RULE_BUSINESS_PARTNER_NOT_EXIST
                     message: Provided NINO is not registered as business partner.
                 RULE_ITSA_CONTRACT_OBJECT_NOT_EXIST:
                   description: |
                     The remote endpoint has indicated that ITSA contract object does not exist.
-                  value: &ref_36
+                  value: &ref_35
                     code: RULE_ITSA_CONTRACT_OBJECT_NOT_EXIST
                     message: ITSA contract object does not exist.
                 RULE_ALREADY_OPTED_OUT:
@@ -3710,7 +3545,7 @@ paths:
                   description: |
                     The request did not match any available Sandbox data. Check that the supplied Gov-Test-Scenario is correct for 
                     this endpoint version. This error will only be returned in the Sandbox environment.
-                  value: *ref_16
+                  value: *ref_15
         '403':
           description: Forbidden
           headers:
@@ -3754,7 +3589,7 @@ paths:
                 CLIENT_OR_AGENT_NOT_AUTHORISED:
                   description: |
                     'The client or agent is not authorised. This is because: the client is not enrolled for MTD, the agent is not enrolled for Agent Services, the client has not authorised the agent to act on their behalf, or the Authorization token provided is not correct.'
-                  value: *ref_17
+                  value: *ref_16
   /accounts/self-assessment/{nino}/{taxYear}/collection/tax-code/coding-out/status:
     get:
       summary: Retrieve Coding Out Status
@@ -3804,7 +3639,7 @@ paths:
           in: path
           description: |
             The tax year the data applies to, for example, 2021-22. The start year and end year must not span two tax years. No gaps are allowed, for example, 2020-22 is not valid.
-          schema: *ref_34
+          schema: *ref_33
           required: true
       responses:
         '200':
@@ -3870,10 +3705,7 @@ paths:
               examples:
                 Request:
                   value:
-                    processingDate: '2020-12-17T09:30:47Z'
-                    nino: AB123456A
-                    taxYear: 2020-21
-                    optOutIndicator: true
+                    $ref: ./examples/retrieveCodingOutStatus/def1/response.json
         '400':
           description: Bad request
           headers:
@@ -3917,7 +3749,7 @@ paths:
                 FORMAT_NINO:
                   description: |
                     The format of the supplied nino value is invalid.
-                  value: *ref_14
+                  value: *ref_13
                 FORMAT_TAX_YEAR:
                   description: |
                     The format of the supplied taxYear value is invalid.
@@ -3933,16 +3765,16 @@ paths:
                 RULE_BUSINESS_PARTNER_NOT_EXIST:
                   description: |
                     The remote endpoint has indicated that business partner does not exist for NINO.
-                  value: *ref_35
+                  value: *ref_34
                 RULE_ITSA_CONTRACT_OBJECT_NOT_EXIST:
                   description: |
                     The remote endpoint has indicated that ITSA contract object does not exist.
-                  value: *ref_36
+                  value: *ref_35
                 RULE_INCORRECT_GOV_TEST_SCENARIO:
                   description: |
                     The request did not match any available Sandbox data. Check that the supplied Gov-Test-Scenario is correct for 
                     this endpoint version. This error will only be returned in the Sandbox environment.
-                  value: *ref_16
+                  value: *ref_15
   /accounts/self-assessment/{nino}/{taxYear}/collection/tax-code/coding-out/opt-in:
     post:
       summary: Opt In to Coding Out
@@ -3993,7 +3825,7 @@ paths:
           in: path
           description: |
             The tax year the data applies to, for example, 2021-22. The start year and end year must not span two tax years. No gaps are allowed, for example, 2020-22 is not valid.
-          schema: *ref_34
+          schema: *ref_33
           required: true
       responses:
         '204':
@@ -4071,7 +3903,7 @@ paths:
                 FORMAT_NINO:
                   description: |
                     The format of the supplied nino value is invalid.
-                  value: *ref_14
+                  value: *ref_13
                 FORMAT_TAX_YEAR:
                   description: |
                     The format of the supplied taxYear value is invalid.
@@ -4079,11 +3911,11 @@ paths:
                 RULE_BUSINESS_PARTNER_NOT_EXIST:
                   description: |
                     The remote endpoint has indicated that business partner does not exist for NINO.
-                  value: *ref_35
+                  value: *ref_34
                 RULE_ITSA_CONTRACT_OBJECT_NOT_EXIST:
                   description: |
                     The remote endpoint has indicated that ITSA contract object does not exist.
-                  value: *ref_36
+                  value: *ref_35
                 RULE_ALREADY_OPTED_IN:
                   description: |
                     The remote endpoint has indicated that customer is already opted in to coding out.
@@ -4094,7 +3926,7 @@ paths:
                   description: |
                     The request did not match any available Sandbox data. Check that the supplied Gov-Test-Scenario is correct for 
                     this endpoint version. This error will only be returned in the Sandbox environment.
-                  value: *ref_16
+                  value: *ref_15
         '403':
           description: Forbidden
           headers:
@@ -4138,7 +3970,7 @@ paths:
                 CLIENT_OR_AGENT_NOT_AUTHORISED:
                   description: |
                     'The client or agent is not authorised. This is because: the client is not enrolled for MTD, the agent is not enrolled for Agent Services, the client has not authorised the agent to act on their behalf, or the Authorization token provided is not correct.'
-                  value: *ref_17
+                  value: *ref_16
 components:
   securitySchemes:
     User-Restricted:
