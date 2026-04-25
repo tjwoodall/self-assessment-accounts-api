@@ -14,7 +14,7 @@
           "taxYear": {
             "description": "The tax year that this charge relates to in the format: YYYY-YY.",
             "type": "string",
-            "format": "date",
+            "format": "tax-year",
             "pattern": "^\\d{4}-\\d{2}$",
             "example": "2022-23"
           },
