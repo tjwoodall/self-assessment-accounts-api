@@ -58,12 +58,14 @@
         "type": "string",
         "description": "The 'from' date of this tax period.\nDate in the format: YYYY-MM-DD",
         "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+        "format": "date",
         "example": "2020-04-06"
       },
       "taxPeriodTo": {
         "type": "string",
         "description": "The 'to' date of this tax period.\nDate in the format: YYYY-MM-DD",
         "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+        "format": "date",
         "example": "2021-04-05"
       },
       "contractAccount": {
