@@ -165,11 +165,15 @@ paths:
                       type: object
                       properties:
                         taxYear:
+                          pattern: "^\\d{4}-\\d{2}$"
                           type: string
                           description: "The tax year that this charge relates to in\
                             \ the format: YYYY-YY."
-                          example: 2022-23
+                          format: date
                         transactionId:
+                          maxLength: 12
+                          minLength: 1
+                          pattern: "^[A-Za-z0-9]{1,12}$"
                           type: string
                           description: "A unique identifier used to return a single\
                             \ charge. Must conform to the regular expression ^[A-Za-z0-9]{1,12}$"
@@ -178,8 +182,11 @@ paths:
                           type: string
                           description: "The date the charge was created in the format:\
                             \ YYYY-MM-DD."
+                          format: date
                           example: 2018-04-05
                         description:
+                          maxLength: 50
+                          minLength: 1
                           type: string
                           description: Primary method to identify what type of charge
                             has been called.
@@ -192,7 +199,7 @@ paths:
                           description: The value of the charge following the change.
                             The value must be between -99999999999.99 and 99999999999.99
                             up to 2 decimal places.
-                          example: 600.00
+                          example: 600.0
                         changeDate:
                           type: string
                           description: "The date the charge was changed, in the format:\
@@ -208,10 +215,13 @@ paths:
                           format: date-time
                           example: 2018-04-05T14:15:22.802Z
                         changeReason:
+                          maxLength: 50
+                          minLength: 1
                           type: string
                           description: The reason for the change.
                           example: " Amended return, Customer Request"
                         poaAdjustmentReason:
+                          pattern: "^[0-9]{3}$"
                           type: string
                           description: "A numeric code indicating the reason for adjustment\
                             \ to Payments on Account. \n\nThe possible values (with\
@@ -523,11 +533,15 @@ paths:
                       type: object
                       properties:
                         taxYear:
+                          pattern: "^\\d{4}-\\d{2}$"
                           type: string
                           description: "The tax year that this charge relates to in\
                             \ the format: YYYY-YY."
-                          example: 2022-23
+                          format: date
                         transactionId:
+                          maxLength: 12
+                          minLength: 1
+                          pattern: "^[A-Za-z0-9]{1,12}$"
                           type: string
                           description: "A unique identifier used to return a single\
                             \ charge. Must conform to the regular expression ^[A-Za-z0-9]{1,12}$"
@@ -536,8 +550,11 @@ paths:
                           type: string
                           description: "The date the charge was created in the format:\
                             \ YYYY-MM-DD."
+                          format: date
                           example: 2018-04-05
                         description:
+                          maxLength: 50
+                          minLength: 1
                           type: string
                           description: Primary method to identify what type of charge
                             has been called.
@@ -550,7 +567,7 @@ paths:
                           description: The value of the charge following the change.
                             The value must be between -99999999999.99 and 99999999999.99
                             up to 2 decimal places.
-                          example: 600.00
+                          example: 600.0
                         changeDate:
                           type: string
                           description: "The date the charge was changed, in the format:\
@@ -566,10 +583,13 @@ paths:
                           format: date-time
                           example: 2018-04-05T14:15:22.802Z
                         changeReason:
+                          maxLength: 50
+                          minLength: 1
                           type: string
                           description: The reason for the change.
                           example: " Amended return, Customer Request"
                         poaAdjustmentReason:
+                          pattern: "^[0-9]{3}$"
                           type: string
                           description: "A numeric code indicating the reason for adjustment\
                             \ to Payments on Account. \n\nThe possible values (with\
@@ -882,11 +902,15 @@ paths:
                       type: object
                       properties:
                         taxYear:
+                          pattern: "^\\d{4}-\\d{2}$"
                           type: string
                           description: "The tax year that this charge relates to in\
                             \ the format: YYYY-YY."
-                          example: 2022-23
+                          format: date
                         transactionId:
+                          maxLength: 12
+                          minLength: 1
+                          pattern: "^[A-Za-z0-9]{1,12}$"
                           type: string
                           description: "A unique identifier used to return a single\
                             \ charge. Must conform to the regular expression ^[A-Za-z0-9]{1,12}$"
@@ -895,8 +919,11 @@ paths:
                           type: string
                           description: "The date the charge was created in the format:\
                             \ YYYY-MM-DD."
+                          format: date
                           example: 2018-04-05
                         description:
+                          maxLength: 50
+                          minLength: 1
                           type: string
                           description: Primary method to identify what type of charge
                             has been called.
@@ -909,7 +936,7 @@ paths:
                           description: The value of the charge following the change.
                             The value must be between -99999999999.99 and 99999999999.99
                             up to 2 decimal places.
-                          example: 600.00
+                          example: 600.0
                         changeDate:
                           type: string
                           description: "The date the charge was changed, in the format:\
@@ -925,10 +952,13 @@ paths:
                           format: date-time
                           example: 2018-04-05T14:15:22.802Z
                         changeReason:
+                          maxLength: 50
+                          minLength: 1
                           type: string
                           description: The reason for the change.
                           example: " Amended return, Customer Request"
                         poaAdjustmentReason:
+                          pattern: "^[0-9]{3}$"
                           type: string
                           description: "A numeric code indicating the reason for adjustment\
                             \ to Payments on Account. \n\nThe possible values (with\
@@ -1320,28 +1350,39 @@ paths:
                     type: object
                     properties:
                       payableAmount:
+                        multipleOf: 0.01
+                        maximum: 99999999999.99
+                        minimum: -99999999999.99
                         type: number
                         description: The sum of any non-zero charges whose payment
                           due date is within 30 days. The value must be between -99999999999.99
                           and 99999999999.99 to 2 decimal places.
                         example: 5009.99
                       payableDueDate:
+                        pattern: "^\\d{4}-\\d{2}-\\d{2}$"
                         type: string
                         description: Next payment date for charges due in the format
                           YYYY-MM-DD.
                         example: 2018-04-05
                       pendingChargeDueAmount:
+                        multipleOf: 0.01
+                        maximum: 99999999999.99
+                        minimum: -99999999999.99
                         type: number
                         description: The sum of any charges whose payment is pending
                           (not yet due). The value must be between -99999999999.99
                           and 99999999999.99 to 2 decimal places.
                         example: 5009.99
                       pendingChargeDueDate:
+                        pattern: "^\\d{4}-\\d{2}-\\d{2}$"
                         type: string
                         description: The date by when the next pending (not yet due)
                           charge must be paid in the format YYYY-MM-DD.
                         example: 2018-04-05
                       overdueAmount:
+                        multipleOf: 0.01
+                        maximum: 99999999999.99
+                        minimum: -99999999999.99
                         type: number
                         description: "The total amount of charges under each documentID\
                           \ whose due date is in the past Accrued Interest Amount\
@@ -1360,11 +1401,15 @@ paths:
                           type: object
                           properties:
                             taxYear:
+                              pattern: "^\\d{4}-\\d{2}$"
                               type: string
                               description: The tax year for the appropriate balance
                                 charge debit.
                               example: 2018-19
                             bcdAmount:
+                              multipleOf: 0.01
+                              maximum: 99999999999.99
+                              minimum: -99999999999.99
                               type: number
                               description: "The balancing charge debit amount is the\
                                 \ balancing payment due by the taxpayer calculated\
@@ -1373,11 +1418,15 @@ paths:
                                 \ decimal places."
                               example: 5009.99
                       earliestPaymentDateOverdue:
+                        pattern: "^\\d{4}-\\d{2}-\\d{2}$"
                         type: string
                         description: The next day after the payment due date in the
                           format YYYY-MM-DD
                         example: 2018-04-05
                       totalBalance:
+                        multipleOf: 0.01
+                        maximum: 99999999999.99
+                        minimum: -99999999999.99
                         type: number
                         description: "The sum of all the unpaid charges excluding\
                           \ statistical and  EOY coded out. The total balance should\
@@ -1387,18 +1436,27 @@ paths:
                           \ to 2 decimal places."
                         example: 5009.99
                       amountCodedOut:
+                        multipleOf: 0.01
+                        maximum: 99999999999.99
+                        minimum: -99999999999.99
                         type: number
                         description: "The total amount of underpayment codeout.\r\n\
                           The value must be between -99999999999.99 and 99999999999.99\
                           \ to 2 decimal places."
                         example: 5009.99
                       totalBcdBalance:
+                        multipleOf: 0.01
+                        maximum: 99999999999.99
+                        minimum: -99999999999.99
                         type: number
                         description: "The total of the Balance charge debit balance\
                           \ amount.\r\nThe value must be between -99999999999.99 and\
                           \ 99999999999.99 to 2 decimal places"
                         example: 5009.99
                       unallocatedCredit:
+                        multipleOf: 0.01
+                        maximum: 99999999999.99
+                        minimum: -99999999999.99
                         type: number
                         description: "Sum of all the Open credit Items on the customer's\
                           \ account, posted for Income tax Self-assessment.\r\nThe\
@@ -1406,6 +1464,9 @@ paths:
                           \ to 2 decimal places."
                         example: 5009.99
                       allocatedCredit:
+                        multipleOf: 0.01
+                        maximum: 99999999999.99
+                        minimum: -99999999999.99
                         type: number
                         description: "Sum of all the closed credit items on the customer's\
                           \ account, posted for  Income tax Self-assessment.\r\nThe\
@@ -1413,24 +1474,36 @@ paths:
                           \ to 2 decimal places."
                         example: 5009.99
                       totalCredit:
+                        multipleOf: 0.01
+                        maximum: 99999999999.99
+                        minimum: -99999999999.99
                         type: number
                         description: "Sum of unallocated credit + allocated credit.\r\
                           \nThe value must be between -99999999999.99 and 99999999999.99\
                           \ to 2 decimal places."
                         example: 5009.99
                       firstPendingAmountRequested:
+                        multipleOf: 0.01
+                        maximum: 99999999999.99
+                        minimum: -99999999999.99
                         type: number
                         description: "This will be the first pending amount that is\
                           \ requested.\r\nThe value must be between -99999999999.99\
                           \ and 99999999999.99 to 2 decimal places."
                         example: 5009.99
                       secondPendingAmountRequested:
+                        multipleOf: 0.01
+                        maximum: 99999999999.99
+                        minimum: -99999999999.99
                         type: number
                         description: "This will be the second pending amount that\
                           \ is requested.\r\nThe value must be between -99999999999.99\
                           \ and 99999999999.99 to 2 decimal places."
                         example: 5009.99
                       availableCredit:
+                        multipleOf: 0.01
+                        maximum: 99999999999.99
+                        minimum: -99999999999.99
                         type: number
                         description: "This will be equal to total credit minus the\
                           \ pending amount(s) requested.\r\nThe value must be between\
@@ -1444,6 +1517,7 @@ paths:
                       type: object
                       properties:
                         returnTaxYear:
+                          pattern: "^\\d{4}-\\d{2}$"
                           type: string
                           description: The ending year of the tax year to which the
                             return relates is in the format YYYY-YY.
@@ -1458,6 +1532,7 @@ paths:
                             -99999999999.99 and 99999999999.99 up to 2 decimal places.
                           example: 5009.99
                         codingTaxYear:
+                          pattern: "^\\d{4}-\\d{2}$"
                           type: string
                           description: The tax year that the coded out charge will
                             be attached to.
@@ -1475,6 +1550,7 @@ paths:
                                 decimal places.
                               example: 5009.99
                             initiationDate:
+                              pattern: "^\\d{4}-\\d{2}-\\d{2}$"
                               type: string
                               description: "Initiation date of the coded out charge,\
                                 \ in the format YYYY-MM-DD."
@@ -1495,22 +1571,28 @@ paths:
                       type: object
                       properties:
                         taxYear:
+                          pattern: "^\\d{4}-\\d{2}$"
                           type: string
                           description: "The tax year of the Document (Billing period\
                             \ from – billing period to), in the format YYYY-YY. For\
                             \ example, the tax year 2020 to 2021 is expressed as 2020-21."
                           example: 2020-21
                         documentId:
+                          maxLength: 12
+                          minLength: 1
+                          pattern: "^[0-9a-zA-Z]{1,12}$"
                           type: string
                           description: "DocumentID may contain SAP document number\
                             \ or Form Bundle Number for zero-amount documents. Must\
                             \ conform to the regular expression ^[0-9a-zA-Z]{1,12}$"
                           example: "1455"
                         formBundleNumber:
+                          maxLength: 16
+                          minLength: 1
                           type: string
                           description: 'The form bundle number designates a package
                             of related transactions gathered together. '
-                          example: "88888888"
+                          example: "068000003760"
                         creditReason:
                           type: string
                           description: Credit Reason gives the reason as to why there
@@ -1521,22 +1603,28 @@ paths:
                           - Income tax Self Assessment Return
                           - Excess Payment
                         documentDate:
+                          pattern: "^\\d{4}-\\d{2}-\\d{2}$"
                           type: string
                           description: The date when the document for a particular
                             tax group containing charges was created in the format
                             YYYY-MM-DD.
                           example: 2018-04-05
                         documentText:
+                          maxLength: 60
+                          minLength: 1
                           type: string
                           description: Provides details about the tax group that the
                             charge belongs to.
                           example: ITSA- Bal Charge
                         documentDueDate:
+                          pattern: "^\\d{4}-\\d{2}-\\d{2}$"
                           type: string
                           description: The date the item must be received in the format
                             YYYY-MM-DD.
                           example: 2021-04-05
                         documentDescription:
+                          maxLength: 50
+                          minLength: 1
                           type: string
                           description: The primary method to identify what type of
                             document has been called.
@@ -1560,7 +1648,7 @@ paths:
                             \ payments, credits, or adjustments.\r\nThe value must\
                             \ be between -99999999999.99 and 99999999999.99 to 2 decimal\
                             \ places."
-                          example: 5000.99
+                          example: 5009.99
                         outstandingAmount:
                           multipleOf: 0.01
                           maximum: 99999999999.99
@@ -1570,16 +1658,19 @@ paths:
                             \ payments, credits, or adjustments.\r\nThe value must\
                             \ be between -99999999999.99 and 99999999999.99 to 2 decimal\
                             \ places."
-                          example: 5000.99
+                          example: 5009.99
                         lastClearing:
                           type: object
                           properties:
                             lastClearingDate:
+                              pattern: "^\\d{4}-\\d{2}-\\d{2}$"
                               type: string
                               description: "The date the outstanding amount was last\
                                 \ modified, in the format YYYY-MM-DD."
                               example: 2018-04-05
                             lastClearingReason:
+                              maxLength: 30
+                              minLength: 1
                               type: string
                               description: "The reason for the change. For example,\
                                 \ an interest charge was created."
@@ -1598,7 +1689,7 @@ paths:
                               description: The amount the transaction was last modified
                                 by. The value must be between -99999999999.99 and
                                 99999999999.99 to 2 decimal places.
-                              example: 5000.99
+                              example: 5009.99
                           description: Details if the amount was previously modified.
                         isChargeEstimate:
                           type: boolean
@@ -1612,16 +1703,23 @@ paths:
                             been sent for coding out.
                           example: false
                         paymentLot:
+                          maxLength: 12
+                          minLength: 1
+                          pattern: "^[0-9A-Za-z]{1,12}$"
                           type: string
                           description: A unique identifier for a credit that has been
                             made direct to ETMP.
                           example: AB1023456789
                         paymentLotItem:
+                          maxLength: 6
+                          minLength: 1
+                          pattern: "^[0-9A-Za-z]{1,6}$"
                           type: string
                           description: A unique ID that is used in combination with
                             Payment Lot to refer to an individual payment.
                           example: "000001"
                         effectiveDateOfPayment:
+                          pattern: "^\\d{4}-\\d{2}-\\d{2}$"
                           type: string
                           description: The effective date of payment in the format
                             YYYY-MM-DD.
@@ -1630,6 +1728,9 @@ paths:
                           type: object
                           properties:
                             latePaymentInterestId:
+                              maxLength: 16
+                              minLength: 1
+                              pattern: "^[0-9A-Za-z]{1,16}$"
                               type: string
                               description: Late Payment Interest ID is the Charge
                                 Reference Number of all the monthly and final interest
@@ -1645,7 +1746,7 @@ paths:
                                 \ is grouped by Charge Reference level. \r\nThe value\
                                 \ must be between -99999999999.99 and 99999999999.99\
                                 \ to 2 decimal places.\r\n"
-                              example: 5000.99
+                              example: 5009.99
                             interestRate:
                               multipleOf: 0.01
                               maximum: 99.99
@@ -1656,11 +1757,13 @@ paths:
                                 places.
                               example: 5.99
                             interestStartDate:
+                              pattern: "^\\d{4}-\\d{2}-\\d{2}$"
                               type: string
                               description: The date the interest charges started in
                                 the format YYYY-MM-DD.
                               example: 2020-04-05
                             interestEndDate:
+                              pattern: "^\\d{4}-\\d{2}-\\d{2}$"
                               type: string
                               description: The date the interest charges ended in
                                 the format YYYY-MM-DD.
@@ -1675,7 +1778,7 @@ paths:
                                 \ Charge Reference level.\r\nThe value must be between\
                                 \ -99999999999.99 and 99999999999.99 to 2 decimal\
                                 \ places."
-                              example: 201.99
+                              example: 5009.99
                             interestDunningLockAmount:
                               multipleOf: 0.01
                               maximum: 99999999999.99
@@ -1697,7 +1800,7 @@ paths:
                                 \ or Late Payment Interest. \r\nThe value must be\
                                 \ between -99999999999.99 and 99999999999.99 to 2\
                                 \ decimal places."
-                              example: 5000.99
+                              example: 5009.99
                           description: An object containing late payment interest
                             details.
                         amountCodedOut:
@@ -1719,18 +1822,23 @@ paths:
                                 \ charge"
                               example: AA
                             documentNumber:
+                              maxLength: 32
+                              minLength: 1
+                              pattern: "^[0-9A-Za-z]{1,32}$"
                               type: string
                               description: "If Charge has been reduced, and credit\
                                 \ arises, the document number to be shown. \r\nThis\
                                 \ will be the SAP Document number of this document"
                               example: "1234567890123456"
                             amendmentDate:
+                              pattern: "^\\d{4}-\\d{2}-\\d{2}$"
                               type: string
                               description: "Amendment date of charge that has been\
                                 \ reduced. \r\nThis will be the date the charge was\
                                 \ reduced/changed/reversed in the format YYYY-MM-DD."
                               example: 2018-04-05
                             taxYear:
+                              pattern: "^\\d{4}-\\d{2}$"
                               type: string
                               description: "Tax Year of Charge that has been reduced.\
                                 \ \r\nThis is the tax year on the original charge."
@@ -1744,7 +1852,7 @@ paths:
                           description: "Payments on account relevant amount. \r\n\
                             The value must be between -99999999999.99 and 99999999999.99\
                             \ to 2 decimal places."
-                          example: 8999.98
+                          example: 5009.99
                       description: An object containing document details
                   financialDetails:
                     type: array
@@ -1756,6 +1864,7 @@ paths:
                       type: object
                       properties:
                         taxYear:
+                          pattern: "^\\d{4}-\\d{2}$"
                           type: string
                           description: "The tax year to which the charge relates,\
                             \ in the format YYYY-YY"
@@ -1766,26 +1875,36 @@ paths:
                           type: object
                           properties:
                             documentId:
+                              maxLength: 12
+                              minLength: 1
+                              pattern: "^[0-9a-zA-Z]{1,12}$"
                               type: string
                               description: "DocumentID may contain SAP document number\
                                 \ or Form Bundle Number for zero-amount documents.\
                                 \ Must conform to the regular expression ^[0-9a-zA-Z]{1,12}$"
                               example: XAIS12345678910
                             documentType:
+                              maxLength: 4
+                              minLength: 1
                               type: string
                               description: A unique ID is used to reference the document
                                 type of which this is a subitem.
-                              example: "1234"
+                              example: "3880"
                             documentTypeDescription:
+                              maxLength: 30
+                              minLength: 1
                               type: string
                               description: The Description of the main charge type
-                              example: SA Balancing Charge
+                              example: ITSA- Bal Charge
                             chargeType:
+                              maxLength: 4
+                              minLength: 1
                               type: string
                               description: A unique ID is used to identify the type
                                 of sub-item.
                               example: "3175"
                             chargeTypeDescription:
+                              pattern: "^[0-9A-Za-z]{1,30}$"
                               type: string
                               description: |-
                                 Name of charge type.
@@ -1793,23 +1912,30 @@ paths:
                                 ^[0-9A-Za-z]{1,30}$
                               example: Income Tax Estimate - NIC2 NI
                         taxPeriodFrom:
+                          pattern: "^\\d{4}-\\d{2}-\\d{2}$"
                           type: string
                           description: |-
                             The 'from' date of this tax period.
                             Date in the format: YYYY-MM-DD
                           example: 2020-04-06
                         taxPeriodTo:
+                          pattern: "^\\d{4}-\\d{2}-\\d{2}$"
                           type: string
                           description: |-
                             The 'to' date of this tax period.
                             Date in the format: YYYY-MM-DD
                           example: 2021-04-05
                         contractAccount:
+                          maxLength: 12
+                          minLength: 1
                           type: string
                           description: A contract account is the accounting record
                             for a particular charge type.
                           example: X
                         documentNumber:
+                          maxLength: 12
+                          minLength: 1
+                          pattern: "^[0-9a-zA-Z]{1,12}$"
                           type: string
                           description: "Same as Document Number/ID unless on output\
                             \ there is no postings (zero amounts) then the Form Bundle\
@@ -1817,28 +1943,41 @@ paths:
                             \ ^[0-9A-Za-z]{1,12}$"
                           example: "1040000872"
                         documentNumberItem:
+                          maxLength: 4
+                          minLength: 1
                           type: string
                           description: An identifier for this part of the overall
                             transaction is used to link an allocation and charge.
                           example: XM00
                         chargeReference:
+                          maxLength: 16
+                          minLength: 1
                           type: string
                           description: A unique reference number is associated with
                             the charge.
                           example: XM002610011594
                         originalAmount:
+                          multipleOf: 0.01
+                          maximum: 99999999999.99
+                          minimum: -99999999999.99
                           type: number
                           description: |-
                             The original amount of this transaction.
                             The value must be between -99999999999.99 and 99999999999.99 to 2 decimal places.
                           example: 5009.99
                         outstandingAmount:
+                          multipleOf: 0.01
+                          maximum: 99999999999.99
+                          minimum: -99999999999.99
                           type: number
                           description: |-
                             The remaining amount is due on this transaction.
                             The value must be between -99999999999.99 and 99999999999.99 to 2 decimal places.
                           example: 5009.99
                         clearedAmount:
+                          multipleOf: 0.01
+                          maximum: 99999999999.99
+                          minimum: -99999999999.99
                           type: number
                           description: "The cleared value of this transaction. For\
                             \ example, the paid amount of a charge. \nThe value must\
@@ -1846,6 +1985,9 @@ paths:
                             \ places."
                           example: 5009.99
                         accruedInterest:
+                          multipleOf: 0.01
+                          maximum: 99999999999.99
+                          minimum: -99999999999.99
                           type: number
                           description: |-
                             The accrued interest of this transaction.
@@ -1862,10 +2004,13 @@ paths:
                             type: object
                             properties:
                               itemId:
+                                maxLength: 3
+                                minLength: 1
                                 type: string
                                 description: An identifier for the item in the list.
                                 example: "001"
                               dueDate:
+                                pattern: "^\\d{4}-\\d{2}-\\d{2}$"
                                 type: string
                                 description: "If the requested item relates to a charge,\
                                   \ the due date is the date by which the amount is\
@@ -1883,11 +2028,14 @@ paths:
                                   and 99999999999.99 to 2 decimal places.
                                 example: 5009.99
                               clearingDate:
+                                pattern: "^\\d{4}-\\d{2}-\\d{2}$"
                                 type: string
                                 description: "The date this entry changed the item,\
                                   \ in the format YYYY-MM-DD."
                                 example: 2018-04-05
                               clearingReason:
+                                maxLength: 50
+                                minLength: 1
                                 type: string
                                 description: The reason for the change to the item.
                                 example: Incoming Payment
@@ -1898,6 +2046,8 @@ paths:
                                 - Manual Clearing
                                 - Automatic Clearing
                               outgoingPaymentMethod:
+                                maxLength: 30
+                                minLength: 1
                                 type: string
                                 description: "The method used to make the outgoing\
                                   \ payment. One of Repayment to Card, Payable Order\
@@ -1943,6 +2093,8 @@ paths:
                                   \ has been generated by a return."
                                 example: true
                               paymentReference:
+                                maxLength: 35
+                                minLength: 1
                                 type: string
                                 description: A unique reference number is associated
                                   with the payment.
@@ -1958,10 +2110,14 @@ paths:
                                   If the item relates to a charge, the payment amount is the amount that this entry changed the transaction by. The value must be between -99999999999.99 and 99999999999.99 to 2 decimal places.
                                 example: 5009.99
                               paymentMethod:
+                                maxLength: 30
+                                minLength: 1
                                 type: string
                                 description: The method used to make the payment.
                                 example: BACS RECEIPTS
                               paymentLot:
+                                maxLength: 12
+                                minLength: 1
                                 type: string
                                 description: "If the item is a payment, the payment\
                                   \ lot is a unique identifier for a credit. If the\
@@ -1971,12 +2127,16 @@ paths:
                                   \ from."
                                 example: "81203010024"
                               paymentLotItem:
+                                maxLength: 6
+                                minLength: 1
                                 type: string
                                 description: A unique ID is used in combination with
                                   a payment ID to refer to an individual payment or
                                   credit.
                                 example: "000001"
                               clearingSAPDocument:
+                                maxLength: 12
+                                minLength: 1
                                 type: string
                                 description: "When a payment is used against a charge,\
                                   \ this links payment and charge together."
@@ -2417,12 +2577,18 @@ paths:
                             payment.
                           example: "000001700000001"
                         paymentAmount:
+                          multipleOf: 0.01
+                          maximum: 99999999999.99
+                          minimum: -99999999999.99
                           type: number
                           description: "The amount of the payment received into the\
                             \ account. \n\nThe value must be between -99999999999.99\
                             \ and 99999999999.99 up to 2 decimal places."
-                          example: 10000.00
+                          example: 10000.0
                         paymentMethod:
+                          maxLength: 30
+                          minLength: 1
+                          pattern: "^[0-9A-Za-z]{1,30}$"
                           type: string
                           description: "The method used to make the payment. \n\n\
                             Must conform to the regular expression:\n^[0-9A-Za-z]{1,30}$"
@@ -2442,33 +2608,42 @@ paths:
                             type: object
                             properties:
                               chargeReference:
+                                maxLength: 16
+                                minLength: 1
                                 type: string
                                 description: A unique reference for the original charge
                                   that the payment was made against.
                                 example: XM002610011595
                               periodKey:
+                                maxLength: 4
+                                minLength: 1
                                 type: string
                                 description: |-
                                   The period key attributed to the charge.
 
                                   A four digit reference containing characters and numbers to identify the specific tax period.
-                                example: 16RL
+                                example: 20G1
                               periodKeyDescription:
+                                maxLength: 50
+                                minLength: 1
                                 type: string
                                 description: A description of the period key as a
                                   tax period.
                                 example: 6th April 2020 to 5th April 2021
                               startDate:
+                                pattern: "^\\d{4}-\\d{2}-\\d{2}$"
                                 type: string
                                 description: The start date of the tax year for the
                                   charge in the format YYYY-MM-DD
                                 example: 2018-04-06
                               endDate:
+                                pattern: "^\\d{4}-\\d{2}-\\d{2}$"
                                 type: string
                                 description: The end date of the tax year for the
                                   charge in the format YYYY-MM-DD
                                 example: 2019-04-05
                               dueDate:
+                                pattern: "^\\d{4}-\\d{2}-\\d{2}$"
                                 type: string
                                 description: The date the charge must be paid by.
                                   Interest or penalties will be accrued after this
@@ -2478,6 +2653,8 @@ paths:
                                 type: object
                                 properties:
                                   documentId:
+                                    maxLength: 12
+                                    minLength: 1
                                     type: string
                                     description: "Same as Document Number unless on\
                                       \ output there are no postings then the Form\
@@ -2485,6 +2662,8 @@ paths:
                                       \ the regular expression: ^[0-9A-Za-z]{1,12}$"
                                     example: "1040000872"
                                   documentType:
+                                    maxLength: 4
+                                    minLength: 1
                                     type: string
                                     description: A code to specify the document type
                                       of which this is a subitem.
@@ -2494,14 +2673,22 @@ paths:
                                     description: Description of the document type.
                                     example: Income Tax Estimate
                                   chargeType:
+                                    maxLength: 4
+                                    minLength: 1
                                     type: string
                                     description: A code to specify the type of charge.
                                     example: "1005"
                                   chargeTypeDescription:
+                                    maxLength: 30
+                                    minLength: 1
+                                    pattern: "^[0-9A-Za-z]{1,30}$"
                                     type: string
                                     description: Description of the charge type.
                                     example: Income Tax Estimate -  ITSA
                               amount:
+                                multipleOf: 0.01
+                                maximum: 99999999999.99
+                                minimum: -99999999999.99
                                 type: number
                                 description: |-
                                   The original value of this transaction.
@@ -2509,6 +2696,9 @@ paths:
                                   The value must be between -99999999999.99 and 99999999999.99 up to 2 decimal places.
                                 example: 600.00
                               clearedAmount:
+                                multipleOf: 0.01
+                                maximum: 99999999999.99
+                                minimum: -99999999999.99
                                 type: number
                                 description: |-
                                   The cleared value of this transaction.
@@ -2516,6 +2706,8 @@ paths:
                                   The value must be between -99999999999.99 and 99999999999.99 up to 2 decimal places.
                                 example: 600.00
                               contractAccount:
+                                maxLength: 12
+                                minLength: 1
                                 type: string
                                 description: The accounting record for a particular
                                   charge type.
@@ -3140,6 +3332,7 @@ paths:
                   nino:
                     type: string
                     description: "National Insurance number, in the format AA999999A."
+                    example: AA999999A
                   taxYear:
                     pattern: "^2[0-9]{3}-[0-9]{2}$"
                     type: string
@@ -3148,6 +3341,7 @@ paths:
                       \ minimum tax year is 2021-22. No gaps are allowed, for example,\
                       \ 2020-22 is not valid. (The minimum tax year in Sandbox is\
                       \ 2019-20.)."
+                    example: 2021-22
                   optOutIndicator:
                     type: boolean
                     description: |-
@@ -3517,11 +3711,15 @@ components:
             type: object
             properties:
               taxYear:
+                pattern: "^\\d{4}-\\d{2}$"
                 type: string
                 description: "The tax year that this charge relates to in the format:\
                   \ YYYY-YY."
-                example: 2022-23
+                format: date
               transactionId:
+                maxLength: 12
+                minLength: 1
+                pattern: "^[A-Za-z0-9]{1,12}$"
                 type: string
                 description: "A unique identifier used to return a single charge.\
                   \ Must conform to the regular expression ^[A-Za-z0-9]{1,12}$"
@@ -3529,8 +3727,11 @@ components:
               transactionDate:
                 type: string
                 description: "The date the charge was created in the format: YYYY-MM-DD."
+                format: date
                 example: 2018-04-05
               description:
+                maxLength: 50
+                minLength: 1
                 type: string
                 description: Primary method to identify what type of charge has been
                   called.
@@ -3543,7 +3744,7 @@ components:
                 description: The value of the charge following the change. The value
                   must be between -99999999999.99 and 99999999999.99 up to 2 decimal
                   places.
-                example: 600.00
+                example: 600.0
               changeDate:
                 type: string
                 description: "The date the charge was changed, in the format: YYYY-MM-DD.\
@@ -3559,10 +3760,13 @@ components:
                 format: date-time
                 example: 2018-04-05T14:15:22.802Z
               changeReason:
+                maxLength: 50
+                minLength: 1
                 type: string
                 description: The reason for the change.
                 example: " Amended return, Customer Request"
               poaAdjustmentReason:
+                pattern: "^[0-9]{3}$"
                 type: string
                 description: "A numeric code indicating the reason for adjustment\
                   \ to Payments on Account. \n\nThe possible values (with their meanings)\
@@ -3603,27 +3807,38 @@ components:
           type: object
           properties:
             payableAmount:
+              multipleOf: 0.01
+              maximum: 99999999999.99
+              minimum: -99999999999.99
               type: number
               description: The sum of any non-zero charges whose payment due date
                 is within 30 days. The value must be between -99999999999.99 and 99999999999.99
                 to 2 decimal places.
               example: 5009.99
             payableDueDate:
+              pattern: "^\\d{4}-\\d{2}-\\d{2}$"
               type: string
               description: Next payment date for charges due in the format YYYY-MM-DD.
               example: 2018-04-05
             pendingChargeDueAmount:
+              multipleOf: 0.01
+              maximum: 99999999999.99
+              minimum: -99999999999.99
               type: number
               description: The sum of any charges whose payment is pending (not yet
                 due). The value must be between -99999999999.99 and 99999999999.99
                 to 2 decimal places.
               example: 5009.99
             pendingChargeDueDate:
+              pattern: "^\\d{4}-\\d{2}-\\d{2}$"
               type: string
               description: The date by when the next pending (not yet due) charge
                 must be paid in the format YYYY-MM-DD.
               example: 2018-04-05
             overdueAmount:
+              multipleOf: 0.01
+              maximum: 99999999999.99
+              minimum: -99999999999.99
               type: number
               description: "The total amount of charges under each documentID whose\
                 \ due date is in the past Accrued Interest Amount / LPI Amount will\
@@ -3640,10 +3855,14 @@ components:
                 type: object
                 properties:
                   taxYear:
+                    pattern: "^\\d{4}-\\d{2}$"
                     type: string
                     description: The tax year for the appropriate balance charge debit.
                     example: 2018-19
                   bcdAmount:
+                    multipleOf: 0.01
+                    maximum: 99999999999.99
+                    minimum: -99999999999.99
                     type: number
                     description: "The balancing charge debit amount is the balancing\
                       \ payment due by the taxpayer calculated when the return is\
@@ -3651,10 +3870,14 @@ components:
                       \ 99999999999.99 to 2 decimal places."
                     example: 5009.99
             earliestPaymentDateOverdue:
+              pattern: "^\\d{4}-\\d{2}-\\d{2}$"
               type: string
               description: The next day after the payment due date in the format YYYY-MM-DD
               example: 2018-04-05
             totalBalance:
+              multipleOf: 0.01
+              maximum: 99999999999.99
+              minimum: -99999999999.99
               type: number
               description: "The sum of all the unpaid charges excluding statistical\
                 \ and  EOY coded out. The total balance should be equal to the sum\
@@ -3663,48 +3886,72 @@ components:
                 \ 99999999999.99 to 2 decimal places."
               example: 5009.99
             amountCodedOut:
+              multipleOf: 0.01
+              maximum: 99999999999.99
+              minimum: -99999999999.99
               type: number
               description: "The total amount of underpayment codeout.\r\nThe value\
                 \ must be between -99999999999.99 and 99999999999.99 to 2 decimal\
                 \ places."
               example: 5009.99
             totalBcdBalance:
+              multipleOf: 0.01
+              maximum: 99999999999.99
+              minimum: -99999999999.99
               type: number
               description: "The total of the Balance charge debit balance amount.\r\
                 \nThe value must be between -99999999999.99 and 99999999999.99 to\
                 \ 2 decimal places"
               example: 5009.99
             unallocatedCredit:
+              multipleOf: 0.01
+              maximum: 99999999999.99
+              minimum: -99999999999.99
               type: number
               description: "Sum of all the Open credit Items on the customer's account,\
                 \ posted for Income tax Self-assessment.\r\nThe value must be between\
                 \ -99999999999.99 and 99999999999.99 to 2 decimal places."
               example: 5009.99
             allocatedCredit:
+              multipleOf: 0.01
+              maximum: 99999999999.99
+              minimum: -99999999999.99
               type: number
               description: "Sum of all the closed credit items on the customer's account,\
                 \ posted for  Income tax Self-assessment.\r\nThe value must be between\
                 \ -99999999999.99 and 99999999999.99 to 2 decimal places."
               example: 5009.99
             totalCredit:
+              multipleOf: 0.01
+              maximum: 99999999999.99
+              minimum: -99999999999.99
               type: number
               description: "Sum of unallocated credit + allocated credit.\r\nThe value\
                 \ must be between -99999999999.99 and 99999999999.99 to 2 decimal\
                 \ places."
               example: 5009.99
             firstPendingAmountRequested:
+              multipleOf: 0.01
+              maximum: 99999999999.99
+              minimum: -99999999999.99
               type: number
               description: "This will be the first pending amount that is requested.\r\
                 \nThe value must be between -99999999999.99 and 99999999999.99 to\
                 \ 2 decimal places."
               example: 5009.99
             secondPendingAmountRequested:
+              multipleOf: 0.01
+              maximum: 99999999999.99
+              minimum: -99999999999.99
               type: number
               description: "This will be the second pending amount that is requested.\r\
                 \nThe value must be between -99999999999.99 and 99999999999.99 to\
                 \ 2 decimal places."
               example: 5009.99
             availableCredit:
+              multipleOf: 0.01
+              maximum: 99999999999.99
+              minimum: -99999999999.99
               type: number
               description: "This will be equal to total credit minus the pending amount(s)\
                 \ requested.\r\nThe value must be between -99999999999.99 and 99999999999.99\
@@ -3718,6 +3965,7 @@ components:
             type: object
             properties:
               returnTaxYear:
+                pattern: "^\\d{4}-\\d{2}$"
                 type: string
                 description: The ending year of the tax year to which the return relates
                   is in the format YYYY-YY.
@@ -3732,6 +3980,7 @@ components:
                   99999999999.99 up to 2 decimal places.
                 example: 5009.99
               codingTaxYear:
+                pattern: "^\\d{4}-\\d{2}$"
                 type: string
                 description: The tax year that the coded out charge will be attached
                   to.
@@ -3748,6 +3997,7 @@ components:
                       and 99999999999.99 up to 2 decimal places.
                     example: 5009.99
                   initiationDate:
+                    pattern: "^\\d{4}-\\d{2}-\\d{2}$"
                     type: string
                     description: "Initiation date of the coded out charge, in the\
                       \ format YYYY-MM-DD."
@@ -3767,22 +4017,28 @@ components:
             type: object
             properties:
               taxYear:
+                pattern: "^\\d{4}-\\d{2}$"
                 type: string
                 description: "The tax year of the Document (Billing period from –\
                   \ billing period to), in the format YYYY-YY. For example, the tax\
                   \ year 2020 to 2021 is expressed as 2020-21."
                 example: 2020-21
               documentId:
+                maxLength: 12
+                minLength: 1
+                pattern: "^[0-9a-zA-Z]{1,12}$"
                 type: string
                 description: "DocumentID may contain SAP document number or Form Bundle\
                   \ Number for zero-amount documents. Must conform to the regular\
                   \ expression ^[0-9a-zA-Z]{1,12}$"
                 example: "1455"
               formBundleNumber:
+                maxLength: 16
+                minLength: 1
                 type: string
                 description: 'The form bundle number designates a package of related
                   transactions gathered together. '
-                example: "88888888"
+                example: "068000003760"
               creditReason:
                 type: string
                 description: Credit Reason gives the reason as to why there is a credit
@@ -3793,20 +4049,26 @@ components:
                 - Income tax Self Assessment Return
                 - Excess Payment
               documentDate:
+                pattern: "^\\d{4}-\\d{2}-\\d{2}$"
                 type: string
                 description: The date when the document for a particular tax group
                   containing charges was created in the format YYYY-MM-DD.
                 example: 2018-04-05
               documentText:
+                maxLength: 60
+                minLength: 1
                 type: string
                 description: Provides details about the tax group that the charge
                   belongs to.
                 example: ITSA- Bal Charge
               documentDueDate:
+                pattern: "^\\d{4}-\\d{2}-\\d{2}$"
                 type: string
                 description: The date the item must be received in the format YYYY-MM-DD.
                 example: 2021-04-05
               documentDescription:
+                maxLength: 50
+                minLength: 1
                 type: string
                 description: The primary method to identify what type of document
                   has been called.
@@ -3829,7 +4091,7 @@ components:
                 description: "The original value of this transaction before payments,\
                   \ credits, or adjustments.\r\nThe value must be between -99999999999.99\
                   \ and 99999999999.99 to 2 decimal places."
-                example: 5000.99
+                example: 5009.99
               outstandingAmount:
                 multipleOf: 0.01
                 maximum: 99999999999.99
@@ -3838,16 +4100,19 @@ components:
                 description: "The amount remaining of this transaction after payments,\
                   \ credits, or adjustments.\r\nThe value must be between -99999999999.99\
                   \ and 99999999999.99 to 2 decimal places."
-                example: 5000.99
+                example: 5009.99
               lastClearing:
                 type: object
                 properties:
                   lastClearingDate:
+                    pattern: "^\\d{4}-\\d{2}-\\d{2}$"
                     type: string
                     description: "The date the outstanding amount was last modified,\
                       \ in the format YYYY-MM-DD."
                     example: 2018-04-05
                   lastClearingReason:
+                    maxLength: 30
+                    minLength: 1
                     type: string
                     description: "The reason for the change. For example, an interest\
                       \ charge was created."
@@ -3866,7 +4131,7 @@ components:
                     description: The amount the transaction was last modified by.
                       The value must be between -99999999999.99 and 99999999999.99
                       to 2 decimal places.
-                    example: 5000.99
+                    example: 5009.99
                 description: Details if the amount was previously modified.
               isChargeEstimate:
                 type: boolean
@@ -3879,16 +4144,23 @@ components:
                   for coding out.
                 example: false
               paymentLot:
+                maxLength: 12
+                minLength: 1
+                pattern: "^[0-9A-Za-z]{1,12}$"
                 type: string
                 description: A unique identifier for a credit that has been made direct
                   to ETMP.
                 example: AB1023456789
               paymentLotItem:
+                maxLength: 6
+                minLength: 1
+                pattern: "^[0-9A-Za-z]{1,6}$"
                 type: string
                 description: A unique ID that is used in combination with Payment
                   Lot to refer to an individual payment.
                 example: "000001"
               effectiveDateOfPayment:
+                pattern: "^\\d{4}-\\d{2}-\\d{2}$"
                 type: string
                 description: The effective date of payment in the format YYYY-MM-DD.
                 example: 2021-04-05
@@ -3896,6 +4168,9 @@ components:
                 type: object
                 properties:
                   latePaymentInterestId:
+                    maxLength: 16
+                    minLength: 1
+                    pattern: "^[0-9A-Za-z]{1,16}$"
                     type: string
                     description: Late Payment Interest ID is the Charge Reference
                       Number of all the monthly and final interest charges of the
@@ -3910,7 +4185,7 @@ components:
                       \ and accruing (unposted) interest charges is grouped by Charge\
                       \ Reference level. \r\nThe value must be between -99999999999.99\
                       \ and 99999999999.99 to 2 decimal places.\r\n"
-                    example: 5000.99
+                    example: 5009.99
                   interestRate:
                     multipleOf: 0.01
                     maximum: 99.99
@@ -3920,11 +4195,13 @@ components:
                       must be between 0 and 99.99 to 2 decimal places.
                     example: 5.99
                   interestStartDate:
+                    pattern: "^\\d{4}-\\d{2}-\\d{2}$"
                     type: string
                     description: The date the interest charges started in the format
                       YYYY-MM-DD.
                     example: 2020-04-05
                   interestEndDate:
+                    pattern: "^\\d{4}-\\d{2}-\\d{2}$"
                     type: string
                     description: The date the interest charges ended in the format
                       YYYY-MM-DD.
@@ -3938,7 +4215,7 @@ components:
                       \ and final interest charges is grouped by Charge Reference\
                       \ level.\r\nThe value must be between -99999999999.99 and 99999999999.99\
                       \ to 2 decimal places."
-                    example: 201.99
+                    example: 5009.99
                   interestDunningLockAmount:
                     multipleOf: 0.01
                     maximum: 99999999999.99
@@ -3958,7 +4235,7 @@ components:
                     description: "TThe unpaid amount of Accruing Interest or Late\
                       \ Payment Interest. \r\nThe value must be between -99999999999.99\
                       \ and 99999999999.99 to 2 decimal places."
-                    example: 5000.99
+                    example: 5009.99
                 description: An object containing late payment interest details.
               amountCodedOut:
                 multipleOf: 0.01
@@ -3978,18 +4255,23 @@ components:
                       \ the Charge type name of the original charge"
                     example: AA
                   documentNumber:
+                    maxLength: 32
+                    minLength: 1
+                    pattern: "^[0-9A-Za-z]{1,32}$"
                     type: string
                     description: "If Charge has been reduced, and credit arises, the\
                       \ document number to be shown. \r\nThis will be the SAP Document\
                       \ number of this document"
                     example: "1234567890123456"
                   amendmentDate:
+                    pattern: "^\\d{4}-\\d{2}-\\d{2}$"
                     type: string
                     description: "Amendment date of charge that has been reduced.\
                       \ \r\nThis will be the date the charge was reduced/changed/reversed\
                       \ in the format YYYY-MM-DD."
                     example: 2018-04-05
                   taxYear:
+                    pattern: "^\\d{4}-\\d{2}$"
                     type: string
                     description: "Tax Year of Charge that has been reduced. \r\nThis\
                       \ is the tax year on the original charge."
@@ -4002,7 +4284,7 @@ components:
                 type: number
                 description: "Payments on account relevant amount. \r\nThe value must\
                   \ be between -99999999999.99 and 99999999999.99 to 2 decimal places."
-                example: 8999.98
+                example: 5009.99
             description: An object containing document details
         financialDetails:
           type: array
@@ -4014,6 +4296,7 @@ components:
             type: object
             properties:
               taxYear:
+                pattern: "^\\d{4}-\\d{2}$"
                 type: string
                 description: "The tax year to which the charge relates, in the format\
                   \ YYYY-YY"
@@ -4024,25 +4307,35 @@ components:
                 type: object
                 properties:
                   documentId:
+                    maxLength: 12
+                    minLength: 1
+                    pattern: "^[0-9a-zA-Z]{1,12}$"
                     type: string
                     description: "DocumentID may contain SAP document number or Form\
                       \ Bundle Number for zero-amount documents. Must conform to the\
                       \ regular expression ^[0-9a-zA-Z]{1,12}$"
                     example: XAIS12345678910
                   documentType:
+                    maxLength: 4
+                    minLength: 1
                     type: string
                     description: A unique ID is used to reference the document type
                       of which this is a subitem.
-                    example: "1234"
+                    example: "3880"
                   documentTypeDescription:
+                    maxLength: 30
+                    minLength: 1
                     type: string
                     description: The Description of the main charge type
-                    example: SA Balancing Charge
+                    example: ITSA- Bal Charge
                   chargeType:
+                    maxLength: 4
+                    minLength: 1
                     type: string
                     description: A unique ID is used to identify the type of sub-item.
                     example: "3175"
                   chargeTypeDescription:
+                    pattern: "^[0-9A-Za-z]{1,30}$"
                     type: string
                     description: |-
                       Name of charge type.
@@ -4050,56 +4343,79 @@ components:
                       ^[0-9A-Za-z]{1,30}$
                     example: Income Tax Estimate - NIC2 NI
               taxPeriodFrom:
+                pattern: "^\\d{4}-\\d{2}-\\d{2}$"
                 type: string
                 description: |-
                   The 'from' date of this tax period.
                   Date in the format: YYYY-MM-DD
                 example: 2020-04-06
               taxPeriodTo:
+                pattern: "^\\d{4}-\\d{2}-\\d{2}$"
                 type: string
                 description: |-
                   The 'to' date of this tax period.
                   Date in the format: YYYY-MM-DD
                 example: 2021-04-05
               contractAccount:
+                maxLength: 12
+                minLength: 1
                 type: string
                 description: A contract account is the accounting record for a particular
                   charge type.
                 example: X
               documentNumber:
+                maxLength: 12
+                minLength: 1
+                pattern: "^[0-9a-zA-Z]{1,12}$"
                 type: string
                 description: "Same as Document Number/ID unless on output there is\
                   \ no postings (zero amounts) then the Form Bundle is returned \n\
                   \nMust conform to the regular expression: ^[0-9A-Za-z]{1,12}$"
                 example: "1040000872"
               documentNumberItem:
+                maxLength: 4
+                minLength: 1
                 type: string
                 description: An identifier for this part of the overall transaction
                   is used to link an allocation and charge.
                 example: XM00
               chargeReference:
+                maxLength: 16
+                minLength: 1
                 type: string
                 description: A unique reference number is associated with the charge.
                 example: XM002610011594
               originalAmount:
+                multipleOf: 0.01
+                maximum: 99999999999.99
+                minimum: -99999999999.99
                 type: number
                 description: |-
                   The original amount of this transaction.
                   The value must be between -99999999999.99 and 99999999999.99 to 2 decimal places.
                 example: 5009.99
               outstandingAmount:
+                multipleOf: 0.01
+                maximum: 99999999999.99
+                minimum: -99999999999.99
                 type: number
                 description: |-
                   The remaining amount is due on this transaction.
                   The value must be between -99999999999.99 and 99999999999.99 to 2 decimal places.
                 example: 5009.99
               clearedAmount:
+                multipleOf: 0.01
+                maximum: 99999999999.99
+                minimum: -99999999999.99
                 type: number
                 description: "The cleared value of this transaction. For example,\
                   \ the paid amount of a charge. \nThe value must be between -99999999999.99\
                   \ and 99999999999.99 to 2 decimal places."
                 example: 5009.99
               accruedInterest:
+                multipleOf: 0.01
+                maximum: 99999999999.99
+                minimum: -99999999999.99
                 type: number
                 description: |-
                   The accrued interest of this transaction.
@@ -4116,10 +4432,13 @@ components:
                   type: object
                   properties:
                     itemId:
+                      maxLength: 3
+                      minLength: 1
                       type: string
                       description: An identifier for the item in the list.
                       example: "001"
                     dueDate:
+                      pattern: "^\\d{4}-\\d{2}-\\d{2}$"
                       type: string
                       description: "If the requested item relates to a charge, the\
                         \ due date is the date by which the amount is due to be paid.\
@@ -4137,11 +4456,14 @@ components:
                         to 2 decimal places.
                       example: 5009.99
                     clearingDate:
+                      pattern: "^\\d{4}-\\d{2}-\\d{2}$"
                       type: string
                       description: "The date this entry changed the item, in the format\
                         \ YYYY-MM-DD."
                       example: 2018-04-05
                     clearingReason:
+                      maxLength: 50
+                      minLength: 1
                       type: string
                       description: The reason for the change to the item.
                       example: Incoming Payment
@@ -4152,6 +4474,8 @@ components:
                       - Manual Clearing
                       - Automatic Clearing
                     outgoingPaymentMethod:
+                      maxLength: 30
+                      minLength: 1
                       type: string
                       description: "The method used to make the outgoing payment.\
                         \ One of Repayment to Card, Payable Order Repayment or BACS\
@@ -4196,6 +4520,8 @@ components:
                         \ generated by a return."
                       example: true
                     paymentReference:
+                      maxLength: 35
+                      minLength: 1
                       type: string
                       description: A unique reference number is associated with the
                         payment.
@@ -4211,10 +4537,14 @@ components:
                         If the item relates to a charge, the payment amount is the amount that this entry changed the transaction by. The value must be between -99999999999.99 and 99999999999.99 to 2 decimal places.
                       example: 5009.99
                     paymentMethod:
+                      maxLength: 30
+                      minLength: 1
                       type: string
                       description: The method used to make the payment.
                       example: BACS RECEIPTS
                     paymentLot:
+                      maxLength: 12
+                      minLength: 1
                       type: string
                       description: "If the item is a payment, the payment lot is a\
                         \ unique identifier for a credit. If the item is a charge,\
@@ -4223,11 +4553,15 @@ components:
                         \ came from."
                       example: "81203010024"
                     paymentLotItem:
+                      maxLength: 6
+                      minLength: 1
                       type: string
                       description: A unique ID is used in combination with a payment
                         ID to refer to an individual payment or credit.
                       example: "000001"
                     clearingSAPDocument:
+                      maxLength: 12
+                      minLength: 1
                       type: string
                       description: "When a payment is used against a charge, this\
                         \ links payment and charge together."
@@ -4286,12 +4620,18 @@ components:
                 description: A unique reference number associated with the payment.
                 example: "000001700000001"
               paymentAmount:
+                multipleOf: 0.01
+                maximum: 99999999999.99
+                minimum: -99999999999.99
                 type: number
                 description: "The amount of the payment received into the account.\
                   \ \n\nThe value must be between -99999999999.99 and 99999999999.99\
                   \ up to 2 decimal places."
-                example: 10000.00
+                example: 10000.0
               paymentMethod:
+                maxLength: 30
+                minLength: 1
+                pattern: "^[0-9A-Za-z]{1,30}$"
                 type: string
                 description: "The method used to make the payment. \n\nMust conform\
                   \ to the regular expression:\n^[0-9A-Za-z]{1,30}$"
@@ -4311,32 +4651,41 @@ components:
                   type: object
                   properties:
                     chargeReference:
+                      maxLength: 16
+                      minLength: 1
                       type: string
                       description: A unique reference for the original charge that
                         the payment was made against.
                       example: XM002610011595
                     periodKey:
+                      maxLength: 4
+                      minLength: 1
                       type: string
                       description: |-
                         The period key attributed to the charge.
 
                         A four digit reference containing characters and numbers to identify the specific tax period.
-                      example: 16RL
+                      example: 20G1
                     periodKeyDescription:
+                      maxLength: 50
+                      minLength: 1
                       type: string
                       description: A description of the period key as a tax period.
                       example: 6th April 2020 to 5th April 2021
                     startDate:
+                      pattern: "^\\d{4}-\\d{2}-\\d{2}$"
                       type: string
                       description: The start date of the tax year for the charge in
                         the format YYYY-MM-DD
                       example: 2018-04-06
                     endDate:
+                      pattern: "^\\d{4}-\\d{2}-\\d{2}$"
                       type: string
                       description: The end date of the tax year for the charge in
                         the format YYYY-MM-DD
                       example: 2019-04-05
                     dueDate:
+                      pattern: "^\\d{4}-\\d{2}-\\d{2}$"
                       type: string
                       description: The date the charge must be paid by. Interest or
                         penalties will be accrued after this date.
@@ -4345,12 +4694,16 @@ components:
                       type: object
                       properties:
                         documentId:
+                          maxLength: 12
+                          minLength: 1
                           type: string
                           description: "Same as Document Number unless on output there\
                             \ are no postings then the Form Bundle number is returned.\
                             \ Must conform to the regular expression: ^[0-9A-Za-z]{1,12}$"
                           example: "1040000872"
                         documentType:
+                          maxLength: 4
+                          minLength: 1
                           type: string
                           description: A code to specify the document type of which
                             this is a subitem.
@@ -4360,14 +4713,22 @@ components:
                           description: Description of the document type.
                           example: Income Tax Estimate
                         chargeType:
+                          maxLength: 4
+                          minLength: 1
                           type: string
                           description: A code to specify the type of charge.
                           example: "1005"
                         chargeTypeDescription:
+                          maxLength: 30
+                          minLength: 1
+                          pattern: "^[0-9A-Za-z]{1,30}$"
                           type: string
                           description: Description of the charge type.
                           example: Income Tax Estimate -  ITSA
                     amount:
+                      multipleOf: 0.01
+                      maximum: 99999999999.99
+                      minimum: -99999999999.99
                       type: number
                       description: |-
                         The original value of this transaction.
@@ -4375,6 +4736,9 @@ components:
                         The value must be between -99999999999.99 and 99999999999.99 up to 2 decimal places.
                       example: 600.00
                     clearedAmount:
+                      multipleOf: 0.01
+                      maximum: 99999999999.99
+                      minimum: -99999999999.99
                       type: number
                       description: |-
                         The cleared value of this transaction.
@@ -4382,6 +4746,8 @@ components:
                         The value must be between -99999999999.99 and 99999999999.99 up to 2 decimal places.
                       example: 600.00
                     contractAccount:
+                      maxLength: 12
+                      minLength: 1
                       type: string
                       description: The accounting record for a particular charge type.
                       example: "000404772537"
@@ -4400,6 +4766,7 @@ components:
         nino:
           type: string
           description: "National Insurance number, in the format AA999999A."
+          example: AA999999A
         taxYear:
           pattern: "^2[0-9]{3}-[0-9]{2}$"
           type: string
@@ -4407,6 +4774,7 @@ components:
             \ start year and end year must not span two tax years. The minimum tax\
             \ year is 2021-22. No gaps are allowed, for example, 2020-22 is not valid.\
             \ (The minimum tax year in Sandbox is 2019-20.)."
+          example: 2021-22
         optOutIndicator:
           type: boolean
           description: |-
@@ -4424,27 +4792,38 @@ components:
       type: object
       properties:
         payableAmount:
+          multipleOf: 0.01
+          maximum: 99999999999.99
+          minimum: -99999999999.99
           type: number
           description: The sum of any non-zero charges whose payment due date is within
             30 days. The value must be between -99999999999.99 and 99999999999.99
             to 2 decimal places.
           example: 5009.99
         payableDueDate:
+          pattern: "^\\d{4}-\\d{2}-\\d{2}$"
           type: string
           description: Next payment date for charges due in the format YYYY-MM-DD.
           example: 2018-04-05
         pendingChargeDueAmount:
+          multipleOf: 0.01
+          maximum: 99999999999.99
+          minimum: -99999999999.99
           type: number
           description: The sum of any charges whose payment is pending (not yet due).
             The value must be between -99999999999.99 and 99999999999.99 to 2 decimal
             places.
           example: 5009.99
         pendingChargeDueDate:
+          pattern: "^\\d{4}-\\d{2}-\\d{2}$"
           type: string
           description: The date by when the next pending (not yet due) charge must
             be paid in the format YYYY-MM-DD.
           example: 2018-04-05
         overdueAmount:
+          multipleOf: 0.01
+          maximum: 99999999999.99
+          minimum: -99999999999.99
           type: number
           description: "The total amount of charges under each documentID whose due\
             \ date is in the past Accrued Interest Amount / LPI Amount will also be\
@@ -4461,10 +4840,14 @@ components:
             type: object
             properties:
               taxYear:
+                pattern: "^\\d{4}-\\d{2}$"
                 type: string
                 description: The tax year for the appropriate balance charge debit.
                 example: 2018-19
               bcdAmount:
+                multipleOf: 0.01
+                maximum: 99999999999.99
+                minimum: -99999999999.99
                 type: number
                 description: "The balancing charge debit amount is the balancing payment\
                   \ due by the taxpayer calculated when the return is captured.\r\n\
@@ -4472,10 +4855,14 @@ components:
                   \ 2 decimal places."
                 example: 5009.99
         earliestPaymentDateOverdue:
+          pattern: "^\\d{4}-\\d{2}-\\d{2}$"
           type: string
           description: The next day after the payment due date in the format YYYY-MM-DD
           example: 2018-04-05
         totalBalance:
+          multipleOf: 0.01
+          maximum: 99999999999.99
+          minimum: -99999999999.99
           type: number
           description: "The sum of all the unpaid charges excluding statistical and\
             \  EOY coded out. The total balance should be equal to the sum of the\
@@ -4484,46 +4871,70 @@ components:
             \ to 2 decimal places."
           example: 5009.99
         amountCodedOut:
+          multipleOf: 0.01
+          maximum: 99999999999.99
+          minimum: -99999999999.99
           type: number
           description: "The total amount of underpayment codeout.\r\nThe value must\
             \ be between -99999999999.99 and 99999999999.99 to 2 decimal places."
           example: 5009.99
         totalBcdBalance:
+          multipleOf: 0.01
+          maximum: 99999999999.99
+          minimum: -99999999999.99
           type: number
           description: "The total of the Balance charge debit balance amount.\r\n\
             The value must be between -99999999999.99 and 99999999999.99 to 2 decimal\
             \ places"
           example: 5009.99
         unallocatedCredit:
+          multipleOf: 0.01
+          maximum: 99999999999.99
+          minimum: -99999999999.99
           type: number
           description: "Sum of all the Open credit Items on the customer's account,\
             \ posted for Income tax Self-assessment.\r\nThe value must be between\
             \ -99999999999.99 and 99999999999.99 to 2 decimal places."
           example: 5009.99
         allocatedCredit:
+          multipleOf: 0.01
+          maximum: 99999999999.99
+          minimum: -99999999999.99
           type: number
           description: "Sum of all the closed credit items on the customer's account,\
             \ posted for  Income tax Self-assessment.\r\nThe value must be between\
             \ -99999999999.99 and 99999999999.99 to 2 decimal places."
           example: 5009.99
         totalCredit:
+          multipleOf: 0.01
+          maximum: 99999999999.99
+          minimum: -99999999999.99
           type: number
           description: "Sum of unallocated credit + allocated credit.\r\nThe value\
             \ must be between -99999999999.99 and 99999999999.99 to 2 decimal places."
           example: 5009.99
         firstPendingAmountRequested:
+          multipleOf: 0.01
+          maximum: 99999999999.99
+          minimum: -99999999999.99
           type: number
           description: "This will be the first pending amount that is requested.\r\
             \nThe value must be between -99999999999.99 and 99999999999.99 to 2 decimal\
             \ places."
           example: 5009.99
         secondPendingAmountRequested:
+          multipleOf: 0.01
+          maximum: 99999999999.99
+          minimum: -99999999999.99
           type: number
           description: "This will be the second pending amount that is requested.\r\
             \nThe value must be between -99999999999.99 and 99999999999.99 to 2 decimal\
             \ places."
           example: 5009.99
         availableCredit:
+          multipleOf: 0.01
+          maximum: 99999999999.99
+          minimum: -99999999999.99
           type: number
           description: "This will be equal to total credit minus the pending amount(s)\
             \ requested.\r\nThe value must be between -99999999999.99 and 99999999999.99\
@@ -4537,6 +4948,7 @@ components:
         type: object
         properties:
           returnTaxYear:
+            pattern: "^\\d{4}-\\d{2}$"
             type: string
             description: The ending year of the tax year to which the return relates
               is in the format YYYY-YY.
@@ -4551,6 +4963,7 @@ components:
               up to 2 decimal places.
             example: 5009.99
           codingTaxYear:
+            pattern: "^\\d{4}-\\d{2}$"
             type: string
             description: The tax year that the coded out charge will be attached to.
             example: 2021-22
@@ -4566,6 +4979,7 @@ components:
                   and 99999999999.99 up to 2 decimal places.
                 example: 5009.99
               initiationDate:
+                pattern: "^\\d{4}-\\d{2}-\\d{2}$"
                 type: string
                 description: "Initiation date of the coded out charge, in the format\
                   \ YYYY-MM-DD."
@@ -4585,22 +4999,28 @@ components:
         type: object
         properties:
           taxYear:
+            pattern: "^\\d{4}-\\d{2}$"
             type: string
             description: "The tax year of the Document (Billing period from – billing\
               \ period to), in the format YYYY-YY. For example, the tax year 2020\
               \ to 2021 is expressed as 2020-21."
             example: 2020-21
           documentId:
+            maxLength: 12
+            minLength: 1
+            pattern: "^[0-9a-zA-Z]{1,12}$"
             type: string
             description: "DocumentID may contain SAP document number or Form Bundle\
               \ Number for zero-amount documents. Must conform to the regular expression\
               \ ^[0-9a-zA-Z]{1,12}$"
             example: "1455"
           formBundleNumber:
+            maxLength: 16
+            minLength: 1
             type: string
             description: 'The form bundle number designates a package of related transactions
               gathered together. '
-            example: "88888888"
+            example: "068000003760"
           creditReason:
             type: string
             description: Credit Reason gives the reason as to why there is a credit
@@ -4611,20 +5031,26 @@ components:
             - Income tax Self Assessment Return
             - Excess Payment
           documentDate:
+            pattern: "^\\d{4}-\\d{2}-\\d{2}$"
             type: string
             description: The date when the document for a particular tax group containing
               charges was created in the format YYYY-MM-DD.
             example: 2018-04-05
           documentText:
+            maxLength: 60
+            minLength: 1
             type: string
             description: Provides details about the tax group that the charge belongs
               to.
             example: ITSA- Bal Charge
           documentDueDate:
+            pattern: "^\\d{4}-\\d{2}-\\d{2}$"
             type: string
             description: The date the item must be received in the format YYYY-MM-DD.
             example: 2021-04-05
           documentDescription:
+            maxLength: 50
+            minLength: 1
             type: string
             description: The primary method to identify what type of document has
               been called.
@@ -4647,7 +5073,7 @@ components:
             description: "The original value of this transaction before payments,\
               \ credits, or adjustments.\r\nThe value must be between -99999999999.99\
               \ and 99999999999.99 to 2 decimal places."
-            example: 5000.99
+            example: 5009.99
           outstandingAmount:
             multipleOf: 0.01
             maximum: 99999999999.99
@@ -4656,16 +5082,19 @@ components:
             description: "The amount remaining of this transaction after payments,\
               \ credits, or adjustments.\r\nThe value must be between -99999999999.99\
               \ and 99999999999.99 to 2 decimal places."
-            example: 5000.99
+            example: 5009.99
           lastClearing:
             type: object
             properties:
               lastClearingDate:
+                pattern: "^\\d{4}-\\d{2}-\\d{2}$"
                 type: string
                 description: "The date the outstanding amount was last modified, in\
                   \ the format YYYY-MM-DD."
                 example: 2018-04-05
               lastClearingReason:
+                maxLength: 30
+                minLength: 1
                 type: string
                 description: "The reason for the change. For example, an interest\
                   \ charge was created."
@@ -4684,7 +5113,7 @@ components:
                 description: The amount the transaction was last modified by. The
                   value must be between -99999999999.99 and 99999999999.99 to 2 decimal
                   places.
-                example: 5000.99
+                example: 5009.99
             description: Details if the amount was previously modified.
           isChargeEstimate:
             type: boolean
@@ -4697,16 +5126,23 @@ components:
               coding out.
             example: false
           paymentLot:
+            maxLength: 12
+            minLength: 1
+            pattern: "^[0-9A-Za-z]{1,12}$"
             type: string
             description: A unique identifier for a credit that has been made direct
               to ETMP.
             example: AB1023456789
           paymentLotItem:
+            maxLength: 6
+            minLength: 1
+            pattern: "^[0-9A-Za-z]{1,6}$"
             type: string
             description: A unique ID that is used in combination with Payment Lot
               to refer to an individual payment.
             example: "000001"
           effectiveDateOfPayment:
+            pattern: "^\\d{4}-\\d{2}-\\d{2}$"
             type: string
             description: The effective date of payment in the format YYYY-MM-DD.
             example: 2021-04-05
@@ -4714,6 +5150,9 @@ components:
             type: object
             properties:
               latePaymentInterestId:
+                maxLength: 16
+                minLength: 1
+                pattern: "^[0-9A-Za-z]{1,16}$"
                 type: string
                 description: Late Payment Interest ID is the Charge Reference Number
                   of all the monthly and final interest charges of the same parent
@@ -4728,7 +5167,7 @@ components:
                   \ and accruing (unposted) interest charges is grouped by Charge\
                   \ Reference level. \r\nThe value must be between -99999999999.99\
                   \ and 99999999999.99 to 2 decimal places.\r\n"
-                example: 5000.99
+                example: 5009.99
               interestRate:
                 multipleOf: 0.01
                 maximum: 99.99
@@ -4738,10 +5177,12 @@ components:
                   must be between 0 and 99.99 to 2 decimal places.
                 example: 5.99
               interestStartDate:
+                pattern: "^\\d{4}-\\d{2}-\\d{2}$"
                 type: string
                 description: The date the interest charges started in the format YYYY-MM-DD.
                 example: 2020-04-05
               interestEndDate:
+                pattern: "^\\d{4}-\\d{2}-\\d{2}$"
                 type: string
                 description: The date the interest charges ended in the format YYYY-MM-DD.
                 example: 2020-05-05
@@ -4754,7 +5195,7 @@ components:
                   \ and final interest charges is grouped by Charge Reference level.\r\
                   \nThe value must be between -99999999999.99 and 99999999999.99 to\
                   \ 2 decimal places."
-                example: 201.99
+                example: 5009.99
               interestDunningLockAmount:
                 multipleOf: 0.01
                 maximum: 99999999999.99
@@ -4773,7 +5214,7 @@ components:
                 description: "TThe unpaid amount of Accruing Interest or Late Payment\
                   \ Interest. \r\nThe value must be between -99999999999.99 and 99999999999.99\
                   \ to 2 decimal places."
-                example: 5000.99
+                example: 5009.99
             description: An object containing late payment interest details.
           amountCodedOut:
             multipleOf: 0.01
@@ -4793,18 +5234,23 @@ components:
                   \ Charge type name of the original charge"
                 example: AA
               documentNumber:
+                maxLength: 32
+                minLength: 1
+                pattern: "^[0-9A-Za-z]{1,32}$"
                 type: string
                 description: "If Charge has been reduced, and credit arises, the document\
                   \ number to be shown. \r\nThis will be the SAP Document number of\
                   \ this document"
                 example: "1234567890123456"
               amendmentDate:
+                pattern: "^\\d{4}-\\d{2}-\\d{2}$"
                 type: string
                 description: "Amendment date of charge that has been reduced. \r\n\
                   This will be the date the charge was reduced/changed/reversed in\
                   \ the format YYYY-MM-DD."
                 example: 2018-04-05
               taxYear:
+                pattern: "^\\d{4}-\\d{2}$"
                 type: string
                 description: "Tax Year of Charge that has been reduced. \r\nThis is\
                   \ the tax year on the original charge."
@@ -4817,7 +5263,7 @@ components:
             type: number
             description: "Payments on account relevant amount. \r\nThe value must\
               \ be between -99999999999.99 and 99999999999.99 to 2 decimal places."
-            example: 8999.98
+            example: 5009.99
         description: An object containing document details
     financialDetails:
       type: array
@@ -4829,6 +5275,7 @@ components:
         type: object
         properties:
           taxYear:
+            pattern: "^\\d{4}-\\d{2}$"
             type: string
             description: "The tax year to which the charge relates, in the format\
               \ YYYY-YY"
@@ -4839,25 +5286,35 @@ components:
             type: object
             properties:
               documentId:
+                maxLength: 12
+                minLength: 1
+                pattern: "^[0-9a-zA-Z]{1,12}$"
                 type: string
                 description: "DocumentID may contain SAP document number or Form Bundle\
                   \ Number for zero-amount documents. Must conform to the regular\
                   \ expression ^[0-9a-zA-Z]{1,12}$"
                 example: XAIS12345678910
               documentType:
+                maxLength: 4
+                minLength: 1
                 type: string
                 description: A unique ID is used to reference the document type of
                   which this is a subitem.
-                example: "1234"
+                example: "3880"
               documentTypeDescription:
+                maxLength: 30
+                minLength: 1
                 type: string
                 description: The Description of the main charge type
-                example: SA Balancing Charge
+                example: ITSA- Bal Charge
               chargeType:
+                maxLength: 4
+                minLength: 1
                 type: string
                 description: A unique ID is used to identify the type of sub-item.
                 example: "3175"
               chargeTypeDescription:
+                pattern: "^[0-9A-Za-z]{1,30}$"
                 type: string
                 description: |-
                   Name of charge type.
@@ -4865,56 +5322,79 @@ components:
                   ^[0-9A-Za-z]{1,30}$
                 example: Income Tax Estimate - NIC2 NI
           taxPeriodFrom:
+            pattern: "^\\d{4}-\\d{2}-\\d{2}$"
             type: string
             description: |-
               The 'from' date of this tax period.
               Date in the format: YYYY-MM-DD
             example: 2020-04-06
           taxPeriodTo:
+            pattern: "^\\d{4}-\\d{2}-\\d{2}$"
             type: string
             description: |-
               The 'to' date of this tax period.
               Date in the format: YYYY-MM-DD
             example: 2021-04-05
           contractAccount:
+            maxLength: 12
+            minLength: 1
             type: string
             description: A contract account is the accounting record for a particular
               charge type.
             example: X
           documentNumber:
+            maxLength: 12
+            minLength: 1
+            pattern: "^[0-9a-zA-Z]{1,12}$"
             type: string
             description: "Same as Document Number/ID unless on output there is no\
               \ postings (zero amounts) then the Form Bundle is returned \n\nMust\
               \ conform to the regular expression: ^[0-9A-Za-z]{1,12}$"
             example: "1040000872"
           documentNumberItem:
+            maxLength: 4
+            minLength: 1
             type: string
             description: An identifier for this part of the overall transaction is
               used to link an allocation and charge.
             example: XM00
           chargeReference:
+            maxLength: 16
+            minLength: 1
             type: string
             description: A unique reference number is associated with the charge.
             example: XM002610011594
           originalAmount:
+            multipleOf: 0.01
+            maximum: 99999999999.99
+            minimum: -99999999999.99
             type: number
             description: |-
               The original amount of this transaction.
               The value must be between -99999999999.99 and 99999999999.99 to 2 decimal places.
             example: 5009.99
           outstandingAmount:
+            multipleOf: 0.01
+            maximum: 99999999999.99
+            minimum: -99999999999.99
             type: number
             description: |-
               The remaining amount is due on this transaction.
               The value must be between -99999999999.99 and 99999999999.99 to 2 decimal places.
             example: 5009.99
           clearedAmount:
+            multipleOf: 0.01
+            maximum: 99999999999.99
+            minimum: -99999999999.99
             type: number
             description: "The cleared value of this transaction. For example, the\
               \ paid amount of a charge. \nThe value must be between -99999999999.99\
               \ and 99999999999.99 to 2 decimal places."
             example: 5009.99
           accruedInterest:
+            multipleOf: 0.01
+            maximum: 99999999999.99
+            minimum: -99999999999.99
             type: number
             description: |-
               The accrued interest of this transaction.
@@ -4931,10 +5411,13 @@ components:
               type: object
               properties:
                 itemId:
+                  maxLength: 3
+                  minLength: 1
                   type: string
                   description: An identifier for the item in the list.
                   example: "001"
                 dueDate:
+                  pattern: "^\\d{4}-\\d{2}-\\d{2}$"
                   type: string
                   description: "If the requested item relates to a charge, the due\
                     \ date is the date by which the amount is due to be paid. If the\
@@ -4951,11 +5434,14 @@ components:
                     to 2 decimal places.
                   example: 5009.99
                 clearingDate:
+                  pattern: "^\\d{4}-\\d{2}-\\d{2}$"
                   type: string
                   description: "The date this entry changed the item, in the format\
                     \ YYYY-MM-DD."
                   example: 2018-04-05
                 clearingReason:
+                  maxLength: 50
+                  minLength: 1
                   type: string
                   description: The reason for the change to the item.
                   example: Incoming Payment
@@ -4966,6 +5452,8 @@ components:
                   - Manual Clearing
                   - Automatic Clearing
                 outgoingPaymentMethod:
+                  maxLength: 30
+                  minLength: 1
                   type: string
                   description: "The method used to make the outgoing payment. One\
                     \ of Repayment to Card, Payable Order Repayment or BACS Payment\
@@ -5010,6 +5498,8 @@ components:
                     \ by a return."
                   example: true
                 paymentReference:
+                  maxLength: 35
+                  minLength: 1
                   type: string
                   description: A unique reference number is associated with the payment.
                   example: Ab12453535
@@ -5024,10 +5514,14 @@ components:
                     If the item relates to a charge, the payment amount is the amount that this entry changed the transaction by. The value must be between -99999999999.99 and 99999999999.99 to 2 decimal places.
                   example: 5009.99
                 paymentMethod:
+                  maxLength: 30
+                  minLength: 1
                   type: string
                   description: The method used to make the payment.
                   example: BACS RECEIPTS
                 paymentLot:
+                  maxLength: 12
+                  minLength: 1
                   type: string
                   description: "If the item is a payment, the payment lot is a unique\
                     \ identifier for a credit. If the item is a charge, the payment\
@@ -5035,11 +5529,15 @@ components:
                     \ and allows you to identify where the payment came from."
                   example: "81203010024"
                 paymentLotItem:
+                  maxLength: 6
+                  minLength: 1
                   type: string
                   description: A unique ID is used in combination with a payment ID
                     to refer to an individual payment or credit.
                   example: "000001"
                 clearingSAPDocument:
+                  maxLength: 12
+                  minLength: 1
                   type: string
                   description: "When a payment is used against a charge, this links\
                     \ payment and charge together."
@@ -5076,10 +5574,13 @@ components:
         type: object
         properties:
           itemId:
+            maxLength: 3
+            minLength: 1
             type: string
             description: An identifier for the item in the list.
             example: "001"
           dueDate:
+            pattern: "^\\d{4}-\\d{2}-\\d{2}$"
             type: string
             description: "If the requested item relates to a charge, the due date\
               \ is the date by which the amount is due to be paid. If the requested\
@@ -5096,10 +5597,13 @@ components:
               places.
             example: 5009.99
           clearingDate:
+            pattern: "^\\d{4}-\\d{2}-\\d{2}$"
             type: string
             description: "The date this entry changed the item, in the format YYYY-MM-DD."
             example: 2018-04-05
           clearingReason:
+            maxLength: 50
+            minLength: 1
             type: string
             description: The reason for the change to the item.
             example: Incoming Payment
@@ -5110,6 +5614,8 @@ components:
             - Manual Clearing
             - Automatic Clearing
           outgoingPaymentMethod:
+            maxLength: 30
+            minLength: 1
             type: string
             description: "The method used to make the outgoing payment. One of Repayment\
               \ to Card, Payable Order Repayment or BACS Payment out"
@@ -5153,6 +5659,8 @@ components:
               \ by a return."
             example: true
           paymentReference:
+            maxLength: 35
+            minLength: 1
             type: string
             description: A unique reference number is associated with the payment.
             example: Ab12453535
@@ -5167,10 +5675,14 @@ components:
               If the item relates to a charge, the payment amount is the amount that this entry changed the transaction by. The value must be between -99999999999.99 and 99999999999.99 to 2 decimal places.
             example: 5009.99
           paymentMethod:
+            maxLength: 30
+            minLength: 1
             type: string
             description: The method used to make the payment.
             example: BACS RECEIPTS
           paymentLot:
+            maxLength: 12
+            minLength: 1
             type: string
             description: "If the item is a payment, the payment lot is a unique identifier\
               \ for a credit. If the item is a charge, the payment lot is a unique\
@@ -5178,11 +5690,15 @@ components:
               \ where the payment came from."
             example: "81203010024"
           paymentLotItem:
+            maxLength: 6
+            minLength: 1
             type: string
             description: A unique ID is used in combination with a payment ID to refer
               to an individual payment or credit.
             example: "000001"
           clearingSAPDocument:
+            maxLength: 12
+            minLength: 1
             type: string
             description: "When a payment is used against a charge, this links payment\
               \ and charge together."
