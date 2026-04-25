@@ -46,7 +46,7 @@
           "chargeTypeDescription": {
             "type": "string",
             "description": "Name of charge type.\nMust conform to the regular expression:\n^[0-9A-Za-z]{1,30}$",
-            "pattern": "^[0-9A-Za-z]{1,30}$",
+            "pattern": "^[-,0-9A-Za-z ]{1,30}$",
             "example": "Income Tax Estimate - NIC2 NI"
           }
         },
