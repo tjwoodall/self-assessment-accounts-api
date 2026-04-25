@@ -18,6 +18,7 @@
         "description": "If the requested item relates to a charge, the due date is the date by which the amount is due to be paid. If the requested item relates to a payment, the due date refers to the date the payment was made to HMRC in the format YYY-MM-DD",
         "type": "string",
         "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+        "format": "date",
         "example": "2018-04-05"
       },
       "amount": {
@@ -32,6 +33,7 @@
         "description": "The date this entry changed the item, in the format YYYY-MM-DD.",
         "type": "string",
         "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+        "format": "date",
         "example": "2018-04-05"
       },
       "clearingReason": {
