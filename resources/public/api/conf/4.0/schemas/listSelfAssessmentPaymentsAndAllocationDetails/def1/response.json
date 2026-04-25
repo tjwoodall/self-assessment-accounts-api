@@ -74,18 +74,21 @@
                   "type": "string",
                   "description": "The start date of the tax year for the charge in the format YYYY-MM-DD",
                   "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                  "format": "date",
                   "example": "2018-04-06"
                 },
                 "endDate": {
                   "type": "string",
                   "description": "The end date of the tax year for the charge in the format YYYY-MM-DD",
                   "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                  "format": "date",
                   "example": "2019-04-05"
                 },
                 "dueDate": {
                   "type": "string",
                   "description": "The date the charge must be paid by. Interest or penalties will be accrued after this date.",
                   "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                  "format": "date",
                   "example": "2019-07-27"
                 },
                 "chargeDetail": {
