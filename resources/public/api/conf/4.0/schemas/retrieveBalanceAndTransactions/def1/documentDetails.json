@@ -41,6 +41,7 @@
         "description": "The date when the document for a particular tax group containing charges was created in the format YYYY-MM-DD.",
         "type": "string",
         "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+        "format": "date",
         "example": "2018-04-05"
       },
       "documentText": {
@@ -54,6 +55,7 @@
         "description": "The date the item must be received in the format YYYY-MM-DD.",
         "type": "string",
         "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+        "format": "date",
         "example": "2021-04-05"
       },
       "documentDescription": {
@@ -98,6 +100,7 @@
             "description": "The date the outstanding amount was last modified, in the format YYYY-MM-DD.",
             "type": "string",
             "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "format": "date",
             "example": "2018-04-05"
           },
           "lastClearingReason": {
@@ -154,6 +157,7 @@
         "description": "The effective date of payment in the format YYYY-MM-DD.",
         "type": "string",
         "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+        "format": "date",
         "example": "2021-04-05"
       },
       "latePaymentInterest": {
@@ -188,12 +192,14 @@
             "description": "The date the interest charges started in the format YYYY-MM-DD.",
             "type": "string",
             "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "format": "date",
             "example": "2020-04-05"
           },
           "interestEndDate": {
             "description": "The date the interest charges ended in the format YYYY-MM-DD.",
             "type": "string",
             "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "format": "date",
             "example": "2020-05-05"
           },
           "interestAmount": {
@@ -251,6 +257,7 @@
             "description": "Amendment date of charge that has been reduced. \r\nThis will be the date the charge was reduced/changed/reversed in the format YYYY-MM-DD.",
             "type": "string",
             "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "format": "date",
             "example": "2018-04-05"
           },
           "taxYear": {
