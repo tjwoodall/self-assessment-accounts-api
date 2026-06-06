@@ -602,7 +602,6 @@
         }
       },
       "additionalProperties": false
-    },
-    "additionalProperties": false
+    }
   }
 }
