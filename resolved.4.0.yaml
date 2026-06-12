@@ -40,15 +40,16 @@ tags:
     \ arising for tax years since the customer joined the new service. There may also\
     \ be outstanding liabilities and payment information a customer needs to view\
     \ for the years prior to signing up to Making Tax Digital for Income Tax Self\
-    \ Assessment that can be viewed using their existing Personal Tax Account.<br><br>"
+    \ Assessment that can be viewed using their existing Personal Tax Account."
 - name: Coding Out Underpayments and Debts
   description: "Coding out is a concept used to retrieve underpaid tax and debts through\
     \ a taxpayers PAYE tax code.<br><br> The coding out underpayments and debts endpoints\
     \ allow software packages to overwrite coding out underpayment and debt amounts\
     \ that are held by HMRC for a previous tax year and given NINO. Software packages\
     \ can then amend previously submitted overwrite amounts, retrieve the HMRC held\
-    \ or user submitted coding out amounts or delete the user submitted amounts.<br><br>"
+    \ or user submitted coding out amounts or delete the user submitted amounts."
 - name: Coding Out Status
+  description: Endpoints relating to coding out status.
 paths:
   /accounts/self-assessment/{nino}/charges/{transactionId}:
     get:
