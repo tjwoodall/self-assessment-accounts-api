@@ -1,0 +1,96 @@
+get:
+  summary: "Retrieve ITSA Penalties [test only]"
+  description: |
+    This endpoint enables a specified customer (identified by a National Insurance number) to retrieve details of all the penalties that have been applied to an ITSA account. 24 months worth of penalty information will be returned.
+    
+    ### Test data
+    Scenario simulation using Gov-Test-Scenario headers is only available in the sandbox environment.
+    
+    | Header Value (Gov-Test-Scenario)            | Scenario                                                                                                                            |
+    |---------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------|
+    | N/A - DEFAULT                               | Simulates the scenario where there are multiple penalties in the last 2 years.                                                                               |
+    | NO_PENALTIES                                | Simulates the scenario where there are no penalties in the last 2 years.                                                            |
+    | LATE_SUBMISSION                             | Simulates the scenario where there is a single late submission penalty in the last 2 years.                                         |
+    | LATE_PAYMENT                                | Simulates the scenario where there is a single late payment penalty in the last 2 years.                                            |
+    | MULTIPLE_PENALTIES                          | Simulates the scenario where there is a single late submission penalty and a single late payment penalty in the last 2 years.       |                                                                                                         |
+    | MULTIPLE_LATE_PAYMENT_PENALTIES             | Simulates the scenario where there are multiple late payment penalties in the last 2 years.                                      |
+    | MULTIPLE_INACTIVE_LATE_SUBMISSION_PENALTIES | Simulates the scenario where there are multiple inactive late submission penalties in the last 2 years.                             | 
+    | THRESHOLD_LATE_SUBMISSION_PENALTIES         | Simulates the scenario where the number of penalties meets the penalty point threshold and the first charge has been generated.     |
+    | CHARGE_LATE_SUBMISSION_PENALTIES            | Simulates the scenario where the number of penalties exceeds the penalty point threshold and a second charge has been generated.    |
+
+  security:
+    - User-Restricted:
+        - read:self-assessment
+
+  tags:
+    - ITSA Penalties
+
+  parameters:
+    - $ref: "./common/headers.yaml#/components/parameters/acceptJson"
+    - $ref: "./common/headers.yaml#/components/parameters/authorizationReadScopeHeader"
+    - $ref: "./common/headers.yaml#/components/parameters/testScenarioHeader"
+    - $ref: "./common/pathParameters.yaml#/components/parameters/nino"
+
+  responses:
+    "200":
+      description: Success
+      headers:
+        X-CorrelationId:
+          $ref: "./common/headers.yaml#/components/parameters/correlationId"
+        Deprecation:
+          $ref: "./common/headers.yaml#/components/parameters/deprecationHeader"
+        Sunset:
+          $ref: "./common/headers.yaml#/components/parameters/sunsetHeader"
+        Link:
+          $ref: "./common/headers.yaml#/components/parameters/linkHeader"
+      content:
+        application/json:
+          schema:
+            $ref: "./schemas/retrieveSelfAssessmentItsaPenalties/response.json"
+          examples:
+            With Penalties:
+              value:
+                $ref: "./examples/retrieveSelfAssessmentItsaPenalties/penalties_response.json"
+            No Penalties:
+              value:
+                $ref: "./examples/retrieveSelfAssessmentItsaPenalties/no_penalties_response.json"
+
+    "400":
+      description: Bad request
+      headers:
+        X-CorrelationId:
+          $ref: "./common/headers.yaml#/components/parameters/correlationId"
+        Deprecation:
+          $ref: "./common/headers.yaml#/components/parameters/deprecationHeader"
+        Sunset:
+          $ref: "./common/headers.yaml#/components/parameters/sunsetHeader"
+        Link:
+          $ref: "./common/headers.yaml#/components/parameters/linkHeader"
+      content:
+        application/json:
+          schema:
+            $ref: './schemas/error-response.yaml'
+          examples:
+            FORMAT_NINO:
+              $ref: "./common/errors.yaml#/components/examples/formatNino"
+            RULE_INCORRECT_GOV_TEST_SCENARIO:
+              $ref: "./common/errors.yaml#/components/examples/ruleIncorrectGovTestScenario"
+
+    "403":
+      description: Forbidden
+      headers:
+        X-CorrelationId:
+          $ref: "./common/headers.yaml#/components/parameters/correlationId"
+        Deprecation:
+          $ref: "./common/headers.yaml#/components/parameters/deprecationHeader"
+        Sunset:
+          $ref: "./common/headers.yaml#/components/parameters/sunsetHeader"
+        Link:
+          $ref: "./common/headers.yaml#/components/parameters/linkHeader"
+      content:
+        application/json:
+          schema:
+            $ref: './schemas/error-response.yaml'
+          examples:
+            CLIENT_OR_AGENT_NOT_AUTHORISED:
+              $ref: "./common/errors.yaml#/components/examples/clientOrAgentNotAuthorised"

@@ -60,6 +60,12 @@ tags:
   - name: Coding Out Status
     description: Endpoints relating to coding out status.
   
+  - name: ITSA Penalties
+    description: |
+      Income Tax Self Assessment (ITSA) penalties are issued by HMRC when a customer fails to meet their tax obligations.
+      These penalties are split into 2 main categories: late submission penalties, which apply when a tax return is not
+      submitted by the required deadline, and late payment penalties, which apply when tax due is not paid by the required deadline.
+  
 
 paths:
   /accounts/self-assessment/{nino}/charges/{transactionId}:
@@ -80,4 +86,7 @@ paths:
     $ref: "./coding_out_status_retrieve.yaml"
   /accounts/self-assessment/{nino}/{taxYear}/collection/tax-code/coding-out/opt-in:
     $ref: "./opt_in_to_coding_out.yaml"
+  
+  /accounts/self-assessment/{nino}/penalties:
+    $ref: "./itsa_penalties_retrieve.yaml"
   
