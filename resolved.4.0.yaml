@@ -50,6 +50,11 @@ tags:
     \ or user submitted coding out amounts or delete the user submitted amounts."
 - name: Coding Out Status
   description: Endpoints relating to coding out status.
+- name: ITSA Penalties
+  description: |
+    Income Tax Self Assessment (ITSA) penalties are issued by HMRC when a customer fails to meet their tax obligations.
+    These penalties are split into 2 main categories: late submission penalties, which apply when a tax return is not
+    submitted by the required deadline, and late payment penalties, which apply when tax due is not paid by the required deadline.
 paths:
   /accounts/self-assessment/{nino}/charges/{transactionId}:
     get:
@@ -3688,6 +3693,929 @@ paths:
       security:
       - User-Restricted:
         - read:self-assessment
+  /accounts/self-assessment/{nino}/penalties:
+    get:
+      tags:
+      - ITSA Penalties
+      summary: "Retrieve ITSA Penalties [test only]"
+      description: "This endpoint enables a specified customer (identified by a National\
+        \ Insurance number) to retrieve details of all the penalties that have been\
+        \ applied to an ITSA account. 24 months worth of penalty information will\
+        \ be returned.\n\n### Test data\nScenario simulation using Gov-Test-Scenario\
+        \ headers is only available in the sandbox environment.\n\n| Header Value\
+        \ (Gov-Test-Scenario)            | Scenario                              \
+        \                                                                        \
+        \                      |\n|---------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------|\n\
+        | N/A - DEFAULT                               | Simulates the scenario where\
+        \ there are multiple penalties in the last 2 years.                      \
+        \                                                         |\n| NO_PENALTIES\
+        \                                | Simulates the scenario where there are\
+        \ no penalties in the last 2 years.                                      \
+        \                      |\n| LATE_SUBMISSION                             |\
+        \ Simulates the scenario where there is a single late submission penalty in\
+        \ the last 2 years.                                         |\n| LATE_PAYMENT\
+        \                                | Simulates the scenario where there is a\
+        \ single late payment penalty in the last 2 years.                       \
+        \                     |\n| MULTIPLE_PENALTIES                          | Simulates\
+        \ the scenario where there is a single late submission penalty and a single\
+        \ late payment penalty in the last 2 years.       |                      \
+        \                                                                        \
+        \           |\n| MULTIPLE_LATE_PAYMENT_PENALTIES             | Simulates the\
+        \ scenario where there are multiple late payment penalties in the last 2 years.\
+        \                                      |\n| MULTIPLE_INACTIVE_LATE_SUBMISSION_PENALTIES\
+        \ | Simulates the scenario where there are multiple inactive late submission\
+        \ penalties in the last 2 years.                             | \n| THRESHOLD_LATE_SUBMISSION_PENALTIES\
+        \         | Simulates the scenario where the number of penalties meets the\
+        \ penalty point threshold and the first charge has been generated.     |\n\
+        | CHARGE_LATE_SUBMISSION_PENALTIES            | Simulates the scenario where\
+        \ the number of penalties exceeds the penalty point threshold and a second\
+        \ charge has been generated.    |\n"
+      parameters:
+      - name: Accept
+        in: header
+        description: |
+          Specifies the response format and the version of the API to be used.
+        required: true
+        schema:
+          type: string
+          enum:
+          - application/vnd.hmrc.4.0+json
+      - name: Authorization
+        in: header
+        description: |
+          An OAuth 2.0 Bearer Token with the *read:self-assessment* scope.
+        required: true
+        schema:
+          type: string
+          example: Bearer bb7fed3fe10dd235a2ccda3d50fb
+      - name: Gov-Test-Scenario
+        in: header
+        description: |
+          Only in sandbox environment. See Test Data table for all header values.
+        required: false
+        schema:
+          type: string
+          example: "-"
+      - name: nino
+        in: path
+        description: |
+          National Insurance number, in the format `AA999999A`.
+        required: true
+        schema:
+          type: string
+          example: TC663795B
+      responses:
+        "200":
+          description: Success
+          headers:
+            X-CorrelationId:
+              description: |
+                Unique ID for operation tracking
+                String, 36 characters.
+              required: true
+              schema:
+                type: string
+                example: c75f40a6-a3df-4429-a697-471eeec46435
+            Deprecation:
+              description: |
+                The deprecation date/time for this endpoint.
+              required: false
+              schema:
+                type: string
+                example: "Sun, 01 Jan 2023 23:59:59 GMT"
+            Sunset:
+              description: |
+                The earliest date/time this endpoint will become unavailable after deprecation.
+              required: false
+              schema:
+                type: string
+                example: "Sun, 02 Jul 2023 23:59:59 GMT"
+            Link:
+              description: |
+                URL of the documentation for the API.
+              required: false
+              schema:
+                type: string
+                example: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/self-assessment-accounts-api
+          content:
+            application/json:
+              schema:
+                title: Retrieve ITSA Penalties
+                type: object
+                properties:
+                  totalisations:
+                    required:
+                    - latePaymentPenaltyEstimateTotal
+                    - latePaymentPenaltyPostedTotal
+                    - lateSubmissionPenaltyTotalValue
+                    - penalisedPrincipalTotal
+                    type: object
+                    properties:
+                      lateSubmissionPenaltyTotalValue:
+                        multipleOf: 0.01
+                        maximum: 99999999999.99
+                        minimum: -99999999999.99
+                        type: number
+                        description: Total value of all unpaid late submission penalties.
+                          The value must be between -99999999999.99 and 99999999999.99
+                          up to 2 decimal places.
+                        example: 5000.99
+                      penalisedPrincipalTotal:
+                        multipleOf: 0.01
+                        maximum: 99999999999.99
+                        minimum: -99999999999.99
+                        type: number
+                        description: Total amount of late tax due (before penalties
+                          and interest). The value must be between -99999999999.99
+                          and 99999999999.99 up to 2 decimal places.
+                        example: 5000.99
+                      latePaymentPenaltyPostedTotal:
+                        multipleOf: 0.01
+                        maximum: 99999999999.99
+                        minimum: -99999999999.99
+                        type: number
+                        description: Total amount of late payment penalty charges.
+                          The value must be between -99999999999.99 and 99999999999.99
+                          up to 2 decimal places.
+                        example: 5000.99
+                      latePaymentPenaltyEstimateTotal:
+                        multipleOf: 0.01
+                        maximum: 99999999999.99
+                        minimum: -99999999999.99
+                        type: number
+                        description: "Estimated total amount of uncharged late payment\
+                          \ penalties, based upon the amount that is accruing. The\
+                          \ value must be between -99999999999.99 and 99999999999.99\
+                          \ up to 2 decimal places."
+                        example: 5000.99
+                    additionalProperties: false
+                    description: Totals that relate to the penalties that HMRC has
+                      levied.
+                  lateSubmissionPenalty:
+                    required:
+                    - details
+                    - summary
+                    type: object
+                    properties:
+                      summary:
+                        required:
+                        - activePenaltyPoints
+                        - inactivePenaltyPoints
+                        - penaltyChargeAmount
+                        - regimeThreshold
+                        type: object
+                        properties:
+                          activePenaltyPoints:
+                            multipleOf: 1
+                            maximum: 99
+                            minimum: 0
+                            type: integer
+                            description: Number of active penalty points held for
+                              failure to submit on time.
+                            example: 10
+                          inactivePenaltyPoints:
+                            multipleOf: 1
+                            maximum: 99
+                            minimum: 0
+                            type: integer
+                            description: Number of inactive penalty points.
+                            example: 12
+                          periodOfComplianceAchievement:
+                            type: string
+                            description: "The date upon which all accrued penalty\
+                              \ points will expire, if the individual meets the requirements\
+                              \ for compliance. Must conform to the format `YYYY-MM-DD`."
+                            format: date
+                            example: 2025-11-30
+                          regimeThreshold:
+                            multipleOf: 1
+                            maximum: 99
+                            minimum: 0
+                            type: integer
+                            description: Total number of penalty points that are required
+                              before a financial penalty will be generated.
+                            example: 10
+                          penaltyChargeAmount:
+                            multipleOf: 0.01
+                            maximum: 99999999999.99
+                            minimum: -99999999999.99
+                            type: number
+                            description: The total late submission penalty charge
+                              amount. The value must be between -99999999999.99 and
+                              99999999999.99 up to 2 decimal places.
+                            example: 684.25
+                        additionalProperties: false
+                        description: A summary of the individual's late submission
+                          penalty status.
+                      details:
+                        minItems: 1
+                        type: array
+                        description: Details of each late submission penalty that
+                          the individual has accrued.
+                        items:
+                          title: lateSubmissionPenaltyDetail
+                          required:
+                          - penaltyCreationDate
+                          - penaltyExpiryDate
+                          - penaltyNumber
+                          type: object
+                          properties:
+                            penaltyNumber:
+                              maxLength: 14
+                              minLength: 1
+                              type: string
+                              description: The unique identification number for the
+                                penalty.
+                              example: "00005678901234"
+                            penaltyOrder:
+                              maxLength: 2
+                              minLength: 1
+                              type: string
+                              description: The position that the penalty currently
+                                occupies within the individual's point balance.
+                              example: "01"
+                            penaltyCategory:
+                              type: string
+                              description: |-
+                                The category of the penalty.
+
+                                Possible values are:
+
+                                * **point** - The penalty represents a point that has not met the threshold for a charge.
+
+                                * **charge** - The penalty represents a charge that has been levied because the point threshold has been exceeded.
+
+                                * **threshold** - The penalty represents a point that has met the threshold for a charge.
+                              example: point
+                              enum:
+                              - point
+                              - charge
+                              - threshold
+                            penaltyStatus:
+                              type: string
+                              description: |-
+                                The status of the penalty.
+
+                                Possible values are:
+
+                                * **active** - The penalty counts towards the point balance.
+                                * **inactive** - The penalty no longer counts towards the point balance.
+                              example: active
+                              enum:
+                              - active
+                              - inactive
+                            frequencyAdjustmentPointIndicator:
+                              type: boolean
+                              description: Indicates whether there has been an adjustment
+                                to the penalty point because of a change to the submission
+                                frequency. The value can only be returned as `true`.
+                              enum:
+                              - true
+                            penaltyCreationDate:
+                              type: string
+                              description: The date that the penalty point was created.
+                                Must conform to the format `YYYY-MM-DD`.
+                              format: date
+                              example: 2024-11-14
+                            penaltyExpiryDate:
+                              type: string
+                              description: "The date that the penalty point will expire.\
+                                \ If the penalty falls within the points threshold,\
+                                \ it will expire once compliance is met. Must conform\
+                                \ to the format `YYYY-MM-DD`."
+                              format: date
+                              example: 2026-11-14
+                            expiryReason:
+                              type: string
+                              description: |-
+                                The reason why a penalty point has expired.
+
+                                Possible values are:
+
+                                * **appeal** - The penalty point has expired due to a successful appeal.
+
+                                * **submission-frequency-change** - The penalty point has expired due to a change in the user's submission frequency.
+
+                                * **obligations-reversed** - A change has resulted in the user's obligations being reversed. For example, a user might have deregistered for self-assessment before a submission was due.
+
+                                * **hmrc-removed** - An HMRC officer has removed the penalty. This might happen, for example, following a decision made by a tribunal.
+
+                                * **natural-expiry** - The penalty point has expired naturally. For example, it has reached the end of its 24-month lifetime.
+
+                                * **penalty-removed** - The penalty has been removed because the submission was deemed to be on time.
+
+                                * **expiry-conditions-met** - The penalty point has expired because the user has met the conditions for the expiry of all active penalty points.
+
+                                * **hmrc-reset** - An HMRC officer has reset the user's penalty points to zero.
+                              example: submission-frequency-change
+                              enum:
+                              - appeal
+                              - submission-frequency-change
+                              - obligations-reversed
+                              - hmrc-removed
+                              - natural-expiry
+                              - penalty-removed
+                              - expiry-conditions-met
+                              - hmrc-reset
+                            communicationsDate:
+                              type: string
+                              description: The date when a letter about the penalty
+                                was sent to the customer. Must conform to the format
+                                `YYYY-MM-DD`.
+                              format: date
+                              example: 2024-11-15
+                            lateSubmissions:
+                              minItems: 1
+                              type: array
+                              description: The late submissions that relate to the
+                                period for which the penalty was levied.
+                              items:
+                                title: lateSubmission
+                                required:
+                                - lateSubmissionId
+                                type: object
+                                properties:
+                                  lateSubmissionId:
+                                    maxLength: 3
+                                    minLength: 1
+                                    type: string
+                                    description: The unique identification number
+                                      for the late submission penalty.
+                                    example: "012"
+                                  incomeSource:
+                                    maxLength: 160
+                                    minLength: 1
+                                    type: string
+                                    description: Identifies the income source associated
+                                      with the late submission.
+                                    example: Income Tax Property
+                                  taxPeriod:
+                                    maxLength: 4
+                                    minLength: 1
+                                    type: string
+                                    description: Identifies the tax period associated
+                                      with the submission.
+                                    example: 23A1
+                                  taxReturnStatus:
+                                    type: string
+                                    description: |-
+                                      The status of the tax return.
+
+                                      Possible values are:
+
+                                      * **open** - The return is yet to be submitted.
+                                      * **fulfilled** - The obligation has been met.
+                                      * **reversed** - The obligation no longer exists.
+                                    example: fulfilled
+                                    enum:
+                                    - open
+                                    - fulfilled
+                                    - reversed
+                                  taxPeriodStartDate:
+                                    type: string
+                                    description: Start date of the tax period to which
+                                      the penalty relates. Must conform to the format
+                                      `YYYY-MM-DD`.
+                                    format: date
+                                    example: 2024-07-01
+                                  taxPeriodEndDate:
+                                    type: string
+                                    description: End date of the tax period to which
+                                      the penalty relates. Must conform to the format
+                                      `YYYY-MM-DD`.
+                                    format: date
+                                    example: 2024-09-30
+                                  taxPeriodDueDate:
+                                    type: string
+                                    description: "The due date for the tax return,\
+                                      \ which was missed and gave rise to the late\
+                                      \ submission penalty. Must conform to the format\
+                                      \ `YYYY-MM-DD`."
+                                    format: date
+                                    example: 2024-11-07
+                                  returnReceiptDate:
+                                    type: string
+                                    description: The date upon which the tax return
+                                      was submitted. Must conform to the format `YYYY-MM-DD`.
+                                    format: date
+                                    example: 2024-11-13
+                                additionalProperties: false
+                            appealInformation:
+                              minItems: 1
+                              type: array
+                              description: Details of any appeals that the individual
+                                has made against the penalty point.
+                              items:
+                                title: lateSubmissionAppealInformation
+                                required:
+                                - description
+                                - status
+                                type: object
+                                properties:
+                                  status:
+                                    type: string
+                                    description: |-
+                                      The appeal status of a penalty.
+
+                                      Possible values are:
+
+                                      * **under-appeal** - The penalty has been formally appealed by the taxpayer.
+
+                                      * **appeal-upheld** - The appeal has been reviewed and accepted (in full or substantially).
+
+                                      * **appeal-rejected** - The appeal has been reviewed and denied.
+
+                                      * **cannot-be-appealed** - The penalty is not eligible for appeal.
+                                    example: appeal-upheld
+                                    enum:
+                                    - under-appeal
+                                    - appeal-upheld
+                                    - appeal-rejected
+                                    - cannot-be-appealed
+                                  level:
+                                    type: string
+                                    description: |-
+                                      The level of appeal.
+
+                                      Possible values are:
+
+                                      * **statutory-review** - This is the first formal appeal stage within HMRC.
+
+                                      * **appeal-first-tier-tribunal** - This is the next escalation beyond HMRC.
+
+                                      * **tribunal** - This is an independent review from a judicial body.
+                                    example: appeal-first-tier-tribunal
+                                    enum:
+                                    - statutory-review
+                                    - appeal-first-tier-tribunal
+                                    - tribunal
+                                  description:
+                                    maxLength: 50
+                                    minLength: 1
+                                    type: string
+                                    description: Appeal description.
+                                    example: Details about Appeal
+                                additionalProperties: false
+                            chargeReference:
+                              maxLength: 16
+                              minLength: 1
+                              type: string
+                              description: The late submission penalty charge reference.
+                              example: XS212345678901
+                            chargeAmount:
+                              multipleOf: 0.01
+                              maximum: 99999999999.99
+                              minimum: -99999999999.99
+                              type: number
+                              description: The late submission penalty charge amount.
+                                The value must be between -99999999999.99 and 99999999999.99
+                                up to 2 decimal places.
+                              example: 543.29
+                            chargeOutstandingAmount:
+                              multipleOf: 0.01
+                              maximum: 99999999999.99
+                              minimum: -99999999999.99
+                              type: number
+                              description: The penalty charge amount that remains
+                                to be paid. The value must be between -99999999999.99
+                                and 99999999999.99 up to 2 decimal places.
+                              example: 123.26
+                            chargeDueDate:
+                              type: string
+                              description: The due date for the late submission penalty
+                                charge (this will be a maximum of 30 days after the
+                                submission was originally due). Must conform to the
+                                format `YYYY-MM-DD`.
+                              format: date
+                              example: 2024-12-04
+                          additionalProperties: false
+                    additionalProperties: false
+                    description: Information about the late submission penalties that
+                      HMRC has levied.
+                  latePaymentPenalty:
+                    type: object
+                    properties:
+                      details:
+                        minItems: 1
+                        type: array
+                        description: Details of all the late payment penalties that
+                          the individual has accrued.
+                        items:
+                          title: latePaymentPenaltyDetail
+                          required:
+                          - penaltyAmountAccruing
+                          - penaltyAmountPosted
+                          - penaltyStatus
+                          - principalChargeBillingFrom
+                          - principalChargeBillingTo
+                          - principalChargeDueDate
+                          - principalChargeReference
+                          type: object
+                          properties:
+                            principalChargeReference:
+                              maxLength: 16
+                              minLength: 1
+                              type: string
+                              description: The reference for the principal charge
+                                upon which the late payment penalty is based.
+                              example: XV123451234512
+                            penaltyCategory:
+                              type: string
+                              description: |-
+                                The category of the penalty.
+
+                                Possible values are:
+
+                                * **lpp1** - The first late payment penalty.
+                                * **lpp2** - The second late payment penalty.
+                              example: lpp1
+                              enum:
+                              - lpp1
+                              - lpp2
+                            penaltyStatus:
+                              type: string
+                              description: |-
+                                The status of the penalty.
+
+                                Possible values are:
+
+                                * **accruing** - The penalty is accruing and is yet to be posted.
+                                * **posted** - The penalty has been posted to the account.
+                              example: posted
+                              enum:
+                              - accruing
+                              - posted
+                            penaltyAmountAccruing:
+                              multipleOf: 0.01
+                              maximum: 99999999999.99
+                              minimum: -99999999999.99
+                              type: number
+                              description: The unposted penalty amount that is accruing.
+                                The value must be between -99999999999.99 and 99999999999.99
+                                up to 2 decimal places.
+                              example: 99.99
+                            penaltyAmountPosted:
+                              multipleOf: 0.01
+                              maximum: 99999999999.99
+                              minimum: -99999999999.99
+                              type: number
+                              description: The penalty amount that has been posted
+                                to the account. The value must be between -99999999999.99
+                                and 99999999999.99 up to 2 decimal places.
+                              example: 1001.45
+                            penaltyAmountPaid:
+                              multipleOf: 0.01
+                              maximum: 99999999999.99
+                              minimum: -99999999999.99
+                              type: number
+                              description: The penalty amount that has already been
+                                paid. The value must be between -99999999999.99 and
+                                99999999999.99 up to 2 decimal places.
+                              example: 1001.45
+                            penaltyAmountOutstanding:
+                              multipleOf: 0.01
+                              maximum: 99999999999.99
+                              minimum: -99999999999.99
+                              type: number
+                              description: The remaining penalty amount to be paid.
+                                The value must be between -99999999999.99 and 99999999999.99
+                                up to 2 decimal places.
+                              example: 99.99
+                            latePaymentPenalty1LowerRateCalculationAmount:
+                              multipleOf: 0.01
+                              maximum: 99999999999.99
+                              minimum: -99999999999.99
+                              type: number
+                              description: The amount of tax that remained unpaid
+                                16 days after the due date. The value must be between
+                                -99999999999.99 and 99999999999.99 up to 2 decimal
+                                places.
+                              example: 99.99
+                            latePaymentPenalty1LowerRatePercentage:
+                              multipleOf: 0.01
+                              maximum: 99.99
+                              minimum: -99.99
+                              type: number
+                              description: The percentage used to calculate the lower-rate
+                                part of the first late payment penalty. The value
+                                must be between -99.99 and 99.99 up to 2 decimal places.
+                              example: 2.0
+                            latePaymentPenalty1HigherRateCalculationAmount:
+                              multipleOf: 0.01
+                              maximum: 99999999999.99
+                              minimum: -99999999999.99
+                              type: number
+                              description: The amount of tax that remained unpaid
+                                31 days after the due date. The value must be between
+                                -99999999999.99 and 99999999999.99 up to 2 decimal
+                                places.
+                              example: 99.99
+                            latePaymentPenalty1HigherRatePercentage:
+                              multipleOf: 0.01
+                              maximum: 99.99
+                              minimum: -99.99
+                              type: number
+                              description: The percentage used to calculate the higher-rate
+                                part of the first late payment penalty. The value
+                                must be between -99.99 and 99.99 up to 2 decimal places.
+                              example: 2.0
+                            latePaymentPenalty2Days:
+                              multipleOf: 1
+                              maximum: 999
+                              minimum: 1
+                              type: integer
+                              description: The number of days over which the second
+                                late payment penalty has accrued since day 31 after
+                                the tax payment due date. The value must be between
+                                1 and 999.
+                              example: 31
+                            latePaymentPenalty2Percentage:
+                              multipleOf: 0.01
+                              maximum: 99.99
+                              minimum: -99.99
+                              type: number
+                              description: The percentage rate applied to unpaid tax
+                                to calculate the second late payment penalty. The
+                                value must be between -99.99 and 99.99 up to 2 decimal
+                                places.
+                              example: 4.0
+                            penaltyChargeCreationDate:
+                              type: string
+                              description: The date when the penalty charge was created.
+                                Must conform to the format `YYYY-MM-DD`.
+                              format: date
+                              example: 2024-12-08
+                            communicationsDate:
+                              type: string
+                              description: The date when a letter about the penalty
+                                was sent to the customer. Must conform to the format
+                                `YYYY-MM-DD`.
+                              format: date
+                              example: 2024-12-09
+                            penaltyChargeReference:
+                              maxLength: 16
+                              minLength: 1
+                              type: string
+                              description: The late payment penalty charge reference.
+                                Not returned if the penaltyStatus is 'accruing'.
+                              example: XP298765432109
+                            penaltyChargeDueDate:
+                              type: string
+                              description: The date that the penalty must be paid
+                                by. Must conform to the format `YYYY-MM-DD`.
+                              format: date
+                              example: 2025-01-08
+                            appealInformation:
+                              minItems: 1
+                              type: array
+                              description: Details of any appeals made against the
+                                penalty.
+                              items:
+                                title: latePaymentAppealInformation
+                                required:
+                                - description
+                                - status
+                                type: object
+                                properties:
+                                  status:
+                                    type: string
+                                    description: |-
+                                      The appeal status of a penalty.
+
+                                      Possible values are:
+
+                                      * **under-appeal** - The penalty has been formally appealed by the taxpayer.
+
+                                      * **appeal-upheld** - The appeal has been reviewed and accepted (in full or substantially).
+
+                                      * **appeal-rejected** - The appeal has been reviewed and denied.
+
+                                      * **cannot-be-appealed** - The penalty is not eligible for appeal.
+                                    example: appeal-upheld
+                                    enum:
+                                    - under-appeal
+                                    - appeal-upheld
+                                    - appeal-rejected
+                                    - cannot-be-appealed
+                                  level:
+                                    type: string
+                                    description: |-
+                                      The level of appeal.
+
+                                      Possible values are:
+
+                                      * **statutory-review** - This is the first formal appeal stage within HMRC.
+
+                                      * **appeal-first-tier-tribunal** - This is the next escalation beyond HMRC.
+
+                                      * **tribunal** - This is an independent review from a judicial body.
+                                    example: appeal-first-tier-tribunal
+                                    enum:
+                                    - statutory-review
+                                    - appeal-first-tier-tribunal
+                                    - tribunal
+                                  description:
+                                    maxLength: 50
+                                    minLength: 1
+                                    type: string
+                                    description: Appeal description.
+                                    example: Reason to appeal
+                                additionalProperties: false
+                            principalChargeDocNumber:
+                              maxLength: 12
+                              minLength: 1
+                              type: string
+                              description: Document number relating to the principal
+                                charge.
+                              example: "123456789012"
+                            principalChargeBillingFrom:
+                              type: string
+                              description: The start date of the obligation period.
+                                Must conform to the format `YYYY-MM-DD`.
+                              format: date
+                              example: 2024-07-01
+                            principalChargeBillingTo:
+                              type: string
+                              description: The end date of the obligation period.
+                                Must conform to the format `YYYY-MM-DD`.
+                              format: date
+                              example: 2024-09-30
+                            principalChargeDueDate:
+                              type: string
+                              description: The date that the principal charge should
+                                have been paid by. Must conform to the format `YYYY-MM-DD`.
+                              format: date
+                              example: 2024-11-07
+                            principalChargeLatestClearing:
+                              type: string
+                              description: The date that the principal charge was
+                                paid. Must conform to the format `YYYY-MM-DD`.
+                              format: date
+                              example: 2025-02-15
+                            timeToPay:
+                              minItems: 1
+                              type: array
+                              description: Details of the Time to Pay arrangement
+                                that has been made.
+                              items:
+                                title: timeToPayDetail
+                                required:
+                                - endDate
+                                - startDate
+                                type: object
+                                properties:
+                                  startDate:
+                                    type: string
+                                    description: The start date of the agreed time
+                                      to pay the charge. Must conform to the format
+                                      `YYYY-MM-DD`.
+                                    format: date
+                                    example: 2024-12-15
+                                  endDate:
+                                    type: string
+                                    description: The last date of the agreed time
+                                      to pay the charge. Must conform to the format
+                                      `YYYY-MM-DD`.
+                                    format: date
+                                    example: 2025-06-15
+                                additionalProperties: false
+                          additionalProperties: false
+                    additionalProperties: false
+                    description: Information about the late payment penalties that
+                      HMRC has levied.
+                additionalProperties: false
+                description: This endpoint retrieves details of all the penalties
+                  that have been applied to an ITSA account. Twenty-four months worth
+                  of penalty information will be returned. A National Insurance number
+                  must be provided.
+              examples:
+                With Penalties:
+                  value:
+                    $ref: ./examples/retrieveSelfAssessmentItsaPenalties/penalties_response.json
+                No Penalties:
+                  value:
+                    $ref: ./examples/retrieveSelfAssessmentItsaPenalties/no_penalties_response.json
+        "400":
+          description: Bad request
+          headers:
+            X-CorrelationId:
+              description: |
+                Unique ID for operation tracking
+                String, 36 characters.
+              required: true
+              schema:
+                type: string
+                example: c75f40a6-a3df-4429-a697-471eeec46435
+            Deprecation:
+              description: |
+                The deprecation date/time for this endpoint.
+              required: false
+              schema:
+                type: string
+                example: "Sun, 01 Jan 2023 23:59:59 GMT"
+            Sunset:
+              description: |
+                The earliest date/time this endpoint will become unavailable after deprecation.
+              required: false
+              schema:
+                type: string
+                example: "Sun, 02 Jul 2023 23:59:59 GMT"
+            Link:
+              description: |
+                URL of the documentation for the API.
+              required: false
+              schema:
+                type: string
+                example: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/self-assessment-accounts-api
+          content:
+            application/json:
+              schema:
+                required:
+                - code
+                type: object
+                properties:
+                  code:
+                    type: string
+                    description: The error code
+                  message:
+                    type: string
+                    description: The error message
+                description: Error Response
+              examples:
+                FORMAT_NINO:
+                  description: |
+                    The format of the supplied nino value is invalid.
+                  value:
+                    code: FORMAT_NINO
+                    message: The format of the supplied nino value is invalid.
+                RULE_INCORRECT_GOV_TEST_SCENARIO:
+                  description: "The request did not match any available Sandbox data.\
+                    \ Check that the supplied Gov-Test-Scenario is correct for \n\
+                    this endpoint version. This error will only be returned in the\
+                    \ Sandbox environment.\n"
+                  value:
+                    code: RULE_INCORRECT_GOV_TEST_SCENARIO
+                    message: The supplied Gov-Test-Scenario is not valid
+        "403":
+          description: Forbidden
+          headers:
+            X-CorrelationId:
+              description: |
+                Unique ID for operation tracking
+                String, 36 characters.
+              required: true
+              schema:
+                type: string
+                example: c75f40a6-a3df-4429-a697-471eeec46435
+            Deprecation:
+              description: |
+                The deprecation date/time for this endpoint.
+              required: false
+              schema:
+                type: string
+                example: "Sun, 01 Jan 2023 23:59:59 GMT"
+            Sunset:
+              description: |
+                The earliest date/time this endpoint will become unavailable after deprecation.
+              required: false
+              schema:
+                type: string
+                example: "Sun, 02 Jul 2023 23:59:59 GMT"
+            Link:
+              description: |
+                URL of the documentation for the API.
+              required: false
+              schema:
+                type: string
+                example: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/self-assessment-accounts-api
+          content:
+            application/json:
+              schema:
+                required:
+                - code
+                type: object
+                properties:
+                  code:
+                    type: string
+                    description: The error code
+                  message:
+                    type: string
+                    description: The error message
+                description: Error Response
+              examples:
+                CLIENT_OR_AGENT_NOT_AUTHORISED:
+                  description: |
+                    'The client or agent is not authorised. This is because: the client is not enrolled for MTD, the agent is not enrolled for Agent Services, the client has not authorised the agent to act on their behalf, or the Authorization token provided is not correct.'
+                  value:
+                    code: CLIENT_OR_AGENT_NOT_AUTHORISED
+                    message: "The client or agent is not authorised. This is because:\
+                      \ the client is not enrolled for MTD, the agent is not enrolled\
+                      \ for Agent Services, the client has not authorised the agent\
+                      \ to act on their behalf, or the Authorization token provided\
+                      \ is not correct."
+      security:
+      - User-Restricted:
+        - read:self-assessment
 components:
   schemas:
     response:
@@ -4783,6 +5711,675 @@ components:
             - true: Customer opted out of coding out for the tax year
             - false: Customer opted in to coding out for the tax year
       additionalProperties: false
+    response_4:
+      title: Retrieve ITSA Penalties
+      type: object
+      properties:
+        totalisations:
+          required:
+          - latePaymentPenaltyEstimateTotal
+          - latePaymentPenaltyPostedTotal
+          - lateSubmissionPenaltyTotalValue
+          - penalisedPrincipalTotal
+          type: object
+          properties:
+            lateSubmissionPenaltyTotalValue:
+              multipleOf: 0.01
+              maximum: 99999999999.99
+              minimum: -99999999999.99
+              type: number
+              description: Total value of all unpaid late submission penalties. The
+                value must be between -99999999999.99 and 99999999999.99 up to 2 decimal
+                places.
+              example: 5000.99
+            penalisedPrincipalTotal:
+              multipleOf: 0.01
+              maximum: 99999999999.99
+              minimum: -99999999999.99
+              type: number
+              description: Total amount of late tax due (before penalties and interest).
+                The value must be between -99999999999.99 and 99999999999.99 up to
+                2 decimal places.
+              example: 5000.99
+            latePaymentPenaltyPostedTotal:
+              multipleOf: 0.01
+              maximum: 99999999999.99
+              minimum: -99999999999.99
+              type: number
+              description: Total amount of late payment penalty charges. The value
+                must be between -99999999999.99 and 99999999999.99 up to 2 decimal
+                places.
+              example: 5000.99
+            latePaymentPenaltyEstimateTotal:
+              multipleOf: 0.01
+              maximum: 99999999999.99
+              minimum: -99999999999.99
+              type: number
+              description: "Estimated total amount of uncharged late payment penalties,\
+                \ based upon the amount that is accruing. The value must be between\
+                \ -99999999999.99 and 99999999999.99 up to 2 decimal places."
+              example: 5000.99
+          additionalProperties: false
+          description: Totals that relate to the penalties that HMRC has levied.
+        lateSubmissionPenalty:
+          required:
+          - details
+          - summary
+          type: object
+          properties:
+            summary:
+              required:
+              - activePenaltyPoints
+              - inactivePenaltyPoints
+              - penaltyChargeAmount
+              - regimeThreshold
+              type: object
+              properties:
+                activePenaltyPoints:
+                  multipleOf: 1
+                  maximum: 99
+                  minimum: 0
+                  type: integer
+                  description: Number of active penalty points held for failure to
+                    submit on time.
+                  example: 10
+                inactivePenaltyPoints:
+                  multipleOf: 1
+                  maximum: 99
+                  minimum: 0
+                  type: integer
+                  description: Number of inactive penalty points.
+                  example: 12
+                periodOfComplianceAchievement:
+                  type: string
+                  description: "The date upon which all accrued penalty points will\
+                    \ expire, if the individual meets the requirements for compliance.\
+                    \ Must conform to the format `YYYY-MM-DD`."
+                  format: date
+                  example: 2025-11-30
+                regimeThreshold:
+                  multipleOf: 1
+                  maximum: 99
+                  minimum: 0
+                  type: integer
+                  description: Total number of penalty points that are required before
+                    a financial penalty will be generated.
+                  example: 10
+                penaltyChargeAmount:
+                  multipleOf: 0.01
+                  maximum: 99999999999.99
+                  minimum: -99999999999.99
+                  type: number
+                  description: The total late submission penalty charge amount. The
+                    value must be between -99999999999.99 and 99999999999.99 up to
+                    2 decimal places.
+                  example: 684.25
+              additionalProperties: false
+              description: A summary of the individual's late submission penalty status.
+            details:
+              minItems: 1
+              type: array
+              description: Details of each late submission penalty that the individual
+                has accrued.
+              items:
+                title: lateSubmissionPenaltyDetail
+                required:
+                - penaltyCreationDate
+                - penaltyExpiryDate
+                - penaltyNumber
+                type: object
+                properties:
+                  penaltyNumber:
+                    maxLength: 14
+                    minLength: 1
+                    type: string
+                    description: The unique identification number for the penalty.
+                    example: "00005678901234"
+                  penaltyOrder:
+                    maxLength: 2
+                    minLength: 1
+                    type: string
+                    description: The position that the penalty currently occupies
+                      within the individual's point balance.
+                    example: "01"
+                  penaltyCategory:
+                    type: string
+                    description: |-
+                      The category of the penalty.
+
+                      Possible values are:
+
+                      * **point** - The penalty represents a point that has not met the threshold for a charge.
+
+                      * **charge** - The penalty represents a charge that has been levied because the point threshold has been exceeded.
+
+                      * **threshold** - The penalty represents a point that has met the threshold for a charge.
+                    example: point
+                    enum:
+                    - point
+                    - charge
+                    - threshold
+                  penaltyStatus:
+                    type: string
+                    description: |-
+                      The status of the penalty.
+
+                      Possible values are:
+
+                      * **active** - The penalty counts towards the point balance.
+                      * **inactive** - The penalty no longer counts towards the point balance.
+                    example: active
+                    enum:
+                    - active
+                    - inactive
+                  frequencyAdjustmentPointIndicator:
+                    type: boolean
+                    description: Indicates whether there has been an adjustment to
+                      the penalty point because of a change to the submission frequency.
+                      The value can only be returned as `true`.
+                    enum:
+                    - true
+                  penaltyCreationDate:
+                    type: string
+                    description: The date that the penalty point was created. Must
+                      conform to the format `YYYY-MM-DD`.
+                    format: date
+                    example: 2024-11-14
+                  penaltyExpiryDate:
+                    type: string
+                    description: "The date that the penalty point will expire. If\
+                      \ the penalty falls within the points threshold, it will expire\
+                      \ once compliance is met. Must conform to the format `YYYY-MM-DD`."
+                    format: date
+                    example: 2026-11-14
+                  expiryReason:
+                    type: string
+                    description: |-
+                      The reason why a penalty point has expired.
+
+                      Possible values are:
+
+                      * **appeal** - The penalty point has expired due to a successful appeal.
+
+                      * **submission-frequency-change** - The penalty point has expired due to a change in the user's submission frequency.
+
+                      * **obligations-reversed** - A change has resulted in the user's obligations being reversed. For example, a user might have deregistered for self-assessment before a submission was due.
+
+                      * **hmrc-removed** - An HMRC officer has removed the penalty. This might happen, for example, following a decision made by a tribunal.
+
+                      * **natural-expiry** - The penalty point has expired naturally. For example, it has reached the end of its 24-month lifetime.
+
+                      * **penalty-removed** - The penalty has been removed because the submission was deemed to be on time.
+
+                      * **expiry-conditions-met** - The penalty point has expired because the user has met the conditions for the expiry of all active penalty points.
+
+                      * **hmrc-reset** - An HMRC officer has reset the user's penalty points to zero.
+                    example: submission-frequency-change
+                    enum:
+                    - appeal
+                    - submission-frequency-change
+                    - obligations-reversed
+                    - hmrc-removed
+                    - natural-expiry
+                    - penalty-removed
+                    - expiry-conditions-met
+                    - hmrc-reset
+                  communicationsDate:
+                    type: string
+                    description: The date when a letter about the penalty was sent
+                      to the customer. Must conform to the format `YYYY-MM-DD`.
+                    format: date
+                    example: 2024-11-15
+                  lateSubmissions:
+                    minItems: 1
+                    type: array
+                    description: The late submissions that relate to the period for
+                      which the penalty was levied.
+                    items:
+                      title: lateSubmission
+                      required:
+                      - lateSubmissionId
+                      type: object
+                      properties:
+                        lateSubmissionId:
+                          maxLength: 3
+                          minLength: 1
+                          type: string
+                          description: The unique identification number for the late
+                            submission penalty.
+                          example: "012"
+                        incomeSource:
+                          maxLength: 160
+                          minLength: 1
+                          type: string
+                          description: Identifies the income source associated with
+                            the late submission.
+                          example: Income Tax Property
+                        taxPeriod:
+                          maxLength: 4
+                          minLength: 1
+                          type: string
+                          description: Identifies the tax period associated with the
+                            submission.
+                          example: 23A1
+                        taxReturnStatus:
+                          type: string
+                          description: |-
+                            The status of the tax return.
+
+                            Possible values are:
+
+                            * **open** - The return is yet to be submitted.
+                            * **fulfilled** - The obligation has been met.
+                            * **reversed** - The obligation no longer exists.
+                          example: fulfilled
+                          enum:
+                          - open
+                          - fulfilled
+                          - reversed
+                        taxPeriodStartDate:
+                          type: string
+                          description: Start date of the tax period to which the penalty
+                            relates. Must conform to the format `YYYY-MM-DD`.
+                          format: date
+                          example: 2024-07-01
+                        taxPeriodEndDate:
+                          type: string
+                          description: End date of the tax period to which the penalty
+                            relates. Must conform to the format `YYYY-MM-DD`.
+                          format: date
+                          example: 2024-09-30
+                        taxPeriodDueDate:
+                          type: string
+                          description: "The due date for the tax return, which was\
+                            \ missed and gave rise to the late submission penalty.\
+                            \ Must conform to the format `YYYY-MM-DD`."
+                          format: date
+                          example: 2024-11-07
+                        returnReceiptDate:
+                          type: string
+                          description: The date upon which the tax return was submitted.
+                            Must conform to the format `YYYY-MM-DD`.
+                          format: date
+                          example: 2024-11-13
+                      additionalProperties: false
+                  appealInformation:
+                    minItems: 1
+                    type: array
+                    description: Details of any appeals that the individual has made
+                      against the penalty point.
+                    items:
+                      title: lateSubmissionAppealInformation
+                      required:
+                      - description
+                      - status
+                      type: object
+                      properties:
+                        status:
+                          type: string
+                          description: |-
+                            The appeal status of a penalty.
+
+                            Possible values are:
+
+                            * **under-appeal** - The penalty has been formally appealed by the taxpayer.
+
+                            * **appeal-upheld** - The appeal has been reviewed and accepted (in full or substantially).
+
+                            * **appeal-rejected** - The appeal has been reviewed and denied.
+
+                            * **cannot-be-appealed** - The penalty is not eligible for appeal.
+                          example: appeal-upheld
+                          enum:
+                          - under-appeal
+                          - appeal-upheld
+                          - appeal-rejected
+                          - cannot-be-appealed
+                        level:
+                          type: string
+                          description: |-
+                            The level of appeal.
+
+                            Possible values are:
+
+                            * **statutory-review** - This is the first formal appeal stage within HMRC.
+
+                            * **appeal-first-tier-tribunal** - This is the next escalation beyond HMRC.
+
+                            * **tribunal** - This is an independent review from a judicial body.
+                          example: appeal-first-tier-tribunal
+                          enum:
+                          - statutory-review
+                          - appeal-first-tier-tribunal
+                          - tribunal
+                        description:
+                          maxLength: 50
+                          minLength: 1
+                          type: string
+                          description: Appeal description.
+                          example: Details about Appeal
+                      additionalProperties: false
+                  chargeReference:
+                    maxLength: 16
+                    minLength: 1
+                    type: string
+                    description: The late submission penalty charge reference.
+                    example: XS212345678901
+                  chargeAmount:
+                    multipleOf: 0.01
+                    maximum: 99999999999.99
+                    minimum: -99999999999.99
+                    type: number
+                    description: The late submission penalty charge amount. The value
+                      must be between -99999999999.99 and 99999999999.99 up to 2 decimal
+                      places.
+                    example: 543.29
+                  chargeOutstandingAmount:
+                    multipleOf: 0.01
+                    maximum: 99999999999.99
+                    minimum: -99999999999.99
+                    type: number
+                    description: The penalty charge amount that remains to be paid.
+                      The value must be between -99999999999.99 and 99999999999.99
+                      up to 2 decimal places.
+                    example: 123.26
+                  chargeDueDate:
+                    type: string
+                    description: The due date for the late submission penalty charge
+                      (this will be a maximum of 30 days after the submission was
+                      originally due). Must conform to the format `YYYY-MM-DD`.
+                    format: date
+                    example: 2024-12-04
+                additionalProperties: false
+          additionalProperties: false
+          description: Information about the late submission penalties that HMRC has
+            levied.
+        latePaymentPenalty:
+          type: object
+          properties:
+            details:
+              minItems: 1
+              type: array
+              description: Details of all the late payment penalties that the individual
+                has accrued.
+              items:
+                title: latePaymentPenaltyDetail
+                required:
+                - penaltyAmountAccruing
+                - penaltyAmountPosted
+                - penaltyStatus
+                - principalChargeBillingFrom
+                - principalChargeBillingTo
+                - principalChargeDueDate
+                - principalChargeReference
+                type: object
+                properties:
+                  principalChargeReference:
+                    maxLength: 16
+                    minLength: 1
+                    type: string
+                    description: The reference for the principal charge upon which
+                      the late payment penalty is based.
+                    example: XV123451234512
+                  penaltyCategory:
+                    type: string
+                    description: |-
+                      The category of the penalty.
+
+                      Possible values are:
+
+                      * **lpp1** - The first late payment penalty.
+                      * **lpp2** - The second late payment penalty.
+                    example: lpp1
+                    enum:
+                    - lpp1
+                    - lpp2
+                  penaltyStatus:
+                    type: string
+                    description: |-
+                      The status of the penalty.
+
+                      Possible values are:
+
+                      * **accruing** - The penalty is accruing and is yet to be posted.
+                      * **posted** - The penalty has been posted to the account.
+                    example: posted
+                    enum:
+                    - accruing
+                    - posted
+                  penaltyAmountAccruing:
+                    multipleOf: 0.01
+                    maximum: 99999999999.99
+                    minimum: -99999999999.99
+                    type: number
+                    description: The unposted penalty amount that is accruing. The
+                      value must be between -99999999999.99 and 99999999999.99 up
+                      to 2 decimal places.
+                    example: 99.99
+                  penaltyAmountPosted:
+                    multipleOf: 0.01
+                    maximum: 99999999999.99
+                    minimum: -99999999999.99
+                    type: number
+                    description: The penalty amount that has been posted to the account.
+                      The value must be between -99999999999.99 and 99999999999.99
+                      up to 2 decimal places.
+                    example: 1001.45
+                  penaltyAmountPaid:
+                    multipleOf: 0.01
+                    maximum: 99999999999.99
+                    minimum: -99999999999.99
+                    type: number
+                    description: The penalty amount that has already been paid. The
+                      value must be between -99999999999.99 and 99999999999.99 up
+                      to 2 decimal places.
+                    example: 1001.45
+                  penaltyAmountOutstanding:
+                    multipleOf: 0.01
+                    maximum: 99999999999.99
+                    minimum: -99999999999.99
+                    type: number
+                    description: The remaining penalty amount to be paid. The value
+                      must be between -99999999999.99 and 99999999999.99 up to 2 decimal
+                      places.
+                    example: 99.99
+                  latePaymentPenalty1LowerRateCalculationAmount:
+                    multipleOf: 0.01
+                    maximum: 99999999999.99
+                    minimum: -99999999999.99
+                    type: number
+                    description: The amount of tax that remained unpaid 16 days after
+                      the due date. The value must be between -99999999999.99 and
+                      99999999999.99 up to 2 decimal places.
+                    example: 99.99
+                  latePaymentPenalty1LowerRatePercentage:
+                    multipleOf: 0.01
+                    maximum: 99.99
+                    minimum: -99.99
+                    type: number
+                    description: The percentage used to calculate the lower-rate part
+                      of the first late payment penalty. The value must be between
+                      -99.99 and 99.99 up to 2 decimal places.
+                    example: 2.0
+                  latePaymentPenalty1HigherRateCalculationAmount:
+                    multipleOf: 0.01
+                    maximum: 99999999999.99
+                    minimum: -99999999999.99
+                    type: number
+                    description: The amount of tax that remained unpaid 31 days after
+                      the due date. The value must be between -99999999999.99 and
+                      99999999999.99 up to 2 decimal places.
+                    example: 99.99
+                  latePaymentPenalty1HigherRatePercentage:
+                    multipleOf: 0.01
+                    maximum: 99.99
+                    minimum: -99.99
+                    type: number
+                    description: The percentage used to calculate the higher-rate
+                      part of the first late payment penalty. The value must be between
+                      -99.99 and 99.99 up to 2 decimal places.
+                    example: 2.0
+                  latePaymentPenalty2Days:
+                    multipleOf: 1
+                    maximum: 999
+                    minimum: 1
+                    type: integer
+                    description: The number of days over which the second late payment
+                      penalty has accrued since day 31 after the tax payment due date.
+                      The value must be between 1 and 999.
+                    example: 31
+                  latePaymentPenalty2Percentage:
+                    multipleOf: 0.01
+                    maximum: 99.99
+                    minimum: -99.99
+                    type: number
+                    description: The percentage rate applied to unpaid tax to calculate
+                      the second late payment penalty. The value must be between -99.99
+                      and 99.99 up to 2 decimal places.
+                    example: 4.0
+                  penaltyChargeCreationDate:
+                    type: string
+                    description: The date when the penalty charge was created. Must
+                      conform to the format `YYYY-MM-DD`.
+                    format: date
+                    example: 2024-12-08
+                  communicationsDate:
+                    type: string
+                    description: The date when a letter about the penalty was sent
+                      to the customer. Must conform to the format `YYYY-MM-DD`.
+                    format: date
+                    example: 2024-12-09
+                  penaltyChargeReference:
+                    maxLength: 16
+                    minLength: 1
+                    type: string
+                    description: The late payment penalty charge reference. Not returned
+                      if the penaltyStatus is 'accruing'.
+                    example: XP298765432109
+                  penaltyChargeDueDate:
+                    type: string
+                    description: The date that the penalty must be paid by. Must conform
+                      to the format `YYYY-MM-DD`.
+                    format: date
+                    example: 2025-01-08
+                  appealInformation:
+                    minItems: 1
+                    type: array
+                    description: Details of any appeals made against the penalty.
+                    items:
+                      title: latePaymentAppealInformation
+                      required:
+                      - description
+                      - status
+                      type: object
+                      properties:
+                        status:
+                          type: string
+                          description: |-
+                            The appeal status of a penalty.
+
+                            Possible values are:
+
+                            * **under-appeal** - The penalty has been formally appealed by the taxpayer.
+
+                            * **appeal-upheld** - The appeal has been reviewed and accepted (in full or substantially).
+
+                            * **appeal-rejected** - The appeal has been reviewed and denied.
+
+                            * **cannot-be-appealed** - The penalty is not eligible for appeal.
+                          example: appeal-upheld
+                          enum:
+                          - under-appeal
+                          - appeal-upheld
+                          - appeal-rejected
+                          - cannot-be-appealed
+                        level:
+                          type: string
+                          description: |-
+                            The level of appeal.
+
+                            Possible values are:
+
+                            * **statutory-review** - This is the first formal appeal stage within HMRC.
+
+                            * **appeal-first-tier-tribunal** - This is the next escalation beyond HMRC.
+
+                            * **tribunal** - This is an independent review from a judicial body.
+                          example: appeal-first-tier-tribunal
+                          enum:
+                          - statutory-review
+                          - appeal-first-tier-tribunal
+                          - tribunal
+                        description:
+                          maxLength: 50
+                          minLength: 1
+                          type: string
+                          description: Appeal description.
+                          example: Reason to appeal
+                      additionalProperties: false
+                  principalChargeDocNumber:
+                    maxLength: 12
+                    minLength: 1
+                    type: string
+                    description: Document number relating to the principal charge.
+                    example: "123456789012"
+                  principalChargeBillingFrom:
+                    type: string
+                    description: The start date of the obligation period. Must conform
+                      to the format `YYYY-MM-DD`.
+                    format: date
+                    example: 2024-07-01
+                  principalChargeBillingTo:
+                    type: string
+                    description: The end date of the obligation period. Must conform
+                      to the format `YYYY-MM-DD`.
+                    format: date
+                    example: 2024-09-30
+                  principalChargeDueDate:
+                    type: string
+                    description: The date that the principal charge should have been
+                      paid by. Must conform to the format `YYYY-MM-DD`.
+                    format: date
+                    example: 2024-11-07
+                  principalChargeLatestClearing:
+                    type: string
+                    description: The date that the principal charge was paid. Must
+                      conform to the format `YYYY-MM-DD`.
+                    format: date
+                    example: 2025-02-15
+                  timeToPay:
+                    minItems: 1
+                    type: array
+                    description: Details of the Time to Pay arrangement that has been
+                      made.
+                    items:
+                      title: timeToPayDetail
+                      required:
+                      - endDate
+                      - startDate
+                      type: object
+                      properties:
+                        startDate:
+                          type: string
+                          description: The start date of the agreed time to pay the
+                            charge. Must conform to the format `YYYY-MM-DD`.
+                          format: date
+                          example: 2024-12-15
+                        endDate:
+                          type: string
+                          description: The last date of the agreed time to pay the
+                            charge. Must conform to the format `YYYY-MM-DD`.
+                          format: date
+                          example: 2025-06-15
+                      additionalProperties: false
+                additionalProperties: false
+          additionalProperties: false
+          description: Information about the late payment penalties that HMRC has
+            levied.
+      additionalProperties: false
+      description: This endpoint retrieves details of all the penalties that have
+        been applied to an ITSA account. Twenty-four months worth of penalty information
+        will be returned. A National Insurance number must be provided.
     balanceDetails:
       required:
       - bcdBalancePerYear
