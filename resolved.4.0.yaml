@@ -3021,7 +3021,7 @@ paths:
       - name: Authorization
         in: header
         description: |
-          An OAuth 2.0 Bearer Token with the *read:self-assessment* scope.
+          An OAuth 2.0 Bearer Token with the *write:self-assessment* scope.
         required: true
         schema:
           type: string
@@ -3227,7 +3227,7 @@ paths:
                       \ is not correct."
       security:
       - User-Restricted:
-        - read:self-assessment
+        - write:self-assessment
   /accounts/self-assessment/{nino}/{taxYear}/collection/tax-code/coding-out/status:
     get:
       tags:
@@ -3486,7 +3486,7 @@ paths:
       - name: Authorization
         in: header
         description: |
-          An OAuth 2.0 Bearer Token with the *read:self-assessment* scope.
+          An OAuth 2.0 Bearer Token with the *write:self-assessment* scope.
         required: true
         schema:
           type: string
@@ -3692,7 +3692,7 @@ paths:
                       \ is not correct."
       security:
       - User-Restricted:
-        - read:self-assessment
+        - write:self-assessment
   /accounts/self-assessment/{nino}/penalties:
     get:
       tags:
@@ -7498,6 +7498,15 @@ components:
       schema:
         type: string
         example: "000001"
+    authorizationWriteScopeHeader:
+      name: Authorization
+      in: header
+      description: |
+        An OAuth 2.0 Bearer Token with the *write:self-assessment* scope.
+      required: true
+      schema:
+        type: string
+        example: Bearer bb7fed3fe10dd235a2ccda3d50fb
     codingOutTaxYear:
       name: taxYear
       in: path
