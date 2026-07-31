@@ -3596,7 +3596,7 @@ paths:
         | STATEFUL                         | Performs a stateful Opt Out of Coding Out.                                                                                                               |
       security:
         - User-Restricted:
-            - read:self-assessment
+            - write:self-assessment
       tags:
         - Coding Out Status
       parameters:
@@ -3609,8 +3609,8 @@ paths:
         - name: Authorization
           in: header
           description: |
-            An OAuth 2.0 Bearer Token with the *read:self-assessment* scope.
-          schema: *ref_9
+            An OAuth 2.0 Bearer Token with the *write:self-assessment* scope.
+          schema: *ref_30
           required: true
         - name: Gov-Test-Scenario
           in: header
@@ -3985,7 +3985,7 @@ paths:
         | STATEFUL                         | Performs a stateful Opt In to Coding Out.                                                                                                                |
       security:
         - User-Restricted:
-            - read:self-assessment
+            - write:self-assessment
       tags:
         - Coding Out Status
       parameters:
@@ -3998,8 +3998,8 @@ paths:
         - name: Authorization
           in: header
           description: |
-            An OAuth 2.0 Bearer Token with the *read:self-assessment* scope.
-          schema: *ref_9
+            An OAuth 2.0 Bearer Token with the *write:self-assessment* scope.
+          schema: *ref_30
           required: true
         - name: Gov-Test-Scenario
           in: header
