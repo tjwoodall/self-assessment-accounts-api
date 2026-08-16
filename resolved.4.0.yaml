@@ -1193,8 +1193,9 @@ paths:
           (When onlyOpenItems has been set to false, either the date range (fromDate and toDate) or doc number should be supplied.)
         required: false
         schema:
+          pattern: "^[a-zA-Z0-9]{12}$"
           type: string
-          example: "3060013199"
+          example: "306001319972"
       - name: fromDate
         in: query
         description: The inclusive start date of the period to filter payments. The
@@ -7385,8 +7386,9 @@ components:
         (When onlyOpenItems has been set to false, either the date range (fromDate and toDate) or doc number should be supplied.)
       required: false
       schema:
+        pattern: "^[a-zA-Z0-9]{12}$"
         type: string
-        example: "3060013199"
+        example: "306001319972"
     fromDate:
       name: fromDate
       in: query
