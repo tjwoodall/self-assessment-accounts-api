@@ -49,11 +49,9 @@ get:
             $ref: "./schemas/retrieveSelfAssessmentItsaPenalties/response.json"
           examples:
             With Penalties:
-              value:
-                $ref: "./examples/retrieveSelfAssessmentItsaPenalties/penalties_response.json"
+              externalValue: "./examples/retrieveSelfAssessmentItsaPenalties/penalties_response.json"
             No Penalties:
-              value:
-                $ref: "./examples/retrieveSelfAssessmentItsaPenalties/no_penalties_response.json"
+              externalValue: "./examples/retrieveSelfAssessmentItsaPenalties/no_penalties_response.json"
 
     "400":
       description: Bad request
