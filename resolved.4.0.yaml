@@ -1219,7 +1219,7 @@ paths:
 
           (When onlyOpenItems has been set to false, either the date range (fromDate and toDate) or docNumber should be supplied.)
 
-          Defaults to false
+          Defaults to false.
         required: false
         schema:
           type: boolean
@@ -1229,7 +1229,7 @@ paths:
         description: |
           Include additional information related to claim and debt management.
 
-          Defaults to false
+          Defaults to false.
         required: false
         schema:
           type: boolean
@@ -1244,6 +1244,8 @@ paths:
           b) On any overdue interest-bearing liability
 
           No interest charge is created for an amount of accruing interest. An interest charge is only created when the related liability is paid in full.
+
+          Defaults to false.
         required: false
         schema:
           type: boolean
@@ -7415,7 +7417,7 @@ components:
 
         (When onlyOpenItems has been set to false, either the date range (fromDate and toDate) or docNumber should be supplied.)
 
-        Defaults to false
+        Defaults to false.
       required: false
       schema:
         type: boolean
@@ -7426,7 +7428,7 @@ components:
       description: |
         Include additional information related to claim and debt management.
 
-        Defaults to false
+        Defaults to false.
       required: false
       schema:
         type: boolean
@@ -7442,6 +7444,8 @@ components:
         b) On any overdue interest-bearing liability
 
         No interest charge is created for an amount of accruing interest. An interest charge is only created when the related liability is paid in full.
+
+        Defaults to false.
       required: false
       schema:
         type: boolean
