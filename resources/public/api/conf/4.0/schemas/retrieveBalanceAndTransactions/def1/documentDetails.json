@@ -223,6 +223,7 @@
           }
         }
       },
+      
       "amountCodedOut": {
         "description": "The amount from the total tax return charge that has been coded out. \r\nThe value must be between -9999.99 and 2999.99 to 2 decimal places.",
         "type": "number",
