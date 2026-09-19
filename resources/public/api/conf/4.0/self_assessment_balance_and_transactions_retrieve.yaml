@@ -52,8 +52,7 @@ get:
             $ref: "./schemas/retrieveBalanceAndTransactions/def1/response.json"
           examples:
             Request:
-              value:
-                $ref: "./examples/retrieveBalanceAndTransactions/def1/fullResponse.json"
+              externalValue: "./examples/retrieveBalanceAndTransactions/def1/fullResponse.json"
 
     400:
       description: Bad request
