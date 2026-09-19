@@ -20,6 +20,8 @@
     "amountCodedOut": 3456.67,
     "totalBcdBalance": 2600.24,
     
+    "totalFormalInformalStandovers": 5009.99,
+    
     "unallocatedCredit": 3456.67,
     "allocatedCredit": 2345.67,
     "totalCredit": 4567.67,
@@ -49,6 +51,8 @@
       "documentDueDate": "2021-04-05",
       "documentDescription": "ITSA- POA 1",
       
+      "chargeClassification": "enquiry-amendment",
+      
       "originalAmount": 5009.99,
       "outstandingAmount": 5009.99,
       "lastClearing": {
@@ -71,6 +75,9 @@
         "interestDunningLockAmount": 5009.99,
         "interestOutstandingAmount": 5009.99
       },
+      
+      "totalStandoverAmount": 5009.99,
+      "collectableAmount": 5009.99,
       
       "amountCodedOut": 5009.99,
       "reducedCharge": {
@@ -111,10 +118,11 @@
           "clearingReason": "Outgoing Payment",
           "outgoingPaymentMethod": "Payable Order Repayment",
           "locks": {
-            "isChargeOnHold": false,
-            "isEstimatedChargeOnHold": false,
-            "isInterestAccrualOnHold": false,
-            "isInterestChargeOnHold": false
+            "isChargeOnHold": true,
+            "isEstimatedChargeOnHold": true,
+            "isInterestAccrualOnHold": true,
+            "isInterestChargeOnHold": true,
+            "dunningLock": "currently suspended on appeal"
           },
           "isReturn": true,
           "paymentReference": "Ab12453535",

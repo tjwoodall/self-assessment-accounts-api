@@ -6,6 +6,8 @@
       "transactionDate": "2018-04-05",
       "description": "POA1, Balancing charge",
     
+      "chargeClassification": "enquiry-amendment",
+      
       "totalAmount": 600.00,
       "changeDate": "2018-04-05",
       "changeTimestamp": "2018-04-05T14:15:22.802Z",
