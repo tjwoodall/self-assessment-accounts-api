@@ -3126,6 +3126,17 @@ paths:
             The tax year the data applies to, for example, 2021-22. The start year and end year must not span two tax years. The minimum tax year is 2021-22. No gaps are allowed, for example, 2020-22 is not valid. (The minimum tax year in Sandbox is 2019-20.)
           schema: *ref_26
           required: true
+        - name: suspend-temporal-validations
+          in: header
+          description: |
+            Only in the sandbox environment. When supplied and set to `true`, this header relaxes tax year validation rule to 
+            allow in-year submissions for endpoints configured for end-of-year submissions. Not supplying the header or setting 
+            it to `false` results in a `RULE_TAX_YEAR_NOT_ENDED` error for in-year submissions. In Production, the header is
+            ignored and normal validations apply.
+          schema:
+            type: boolean
+            example: true
+          required: false
       requestBody:
         content:
           application/json:
