@@ -117,8 +117,6 @@
         "principalChargeDueDate": "2024-11-07",
         {{#if (enabled 'r23_penalties_docs')}}
         "parentChargeFormalStandover": true,
-        "parentChargeInformalStandover": false,
-        "penaltyChargeInformalStandover": false,
         {{/if}}
         "principalChargeLatestClearing": "2025-02-15",
         "timeToPay": [
