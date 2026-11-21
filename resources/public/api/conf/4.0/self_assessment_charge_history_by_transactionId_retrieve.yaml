@@ -45,8 +45,7 @@ get:
             $ref: "./schemas/retrieveSelfAssementChargeHistory/def1/response.json"
           examples:
             Request:
-              value:
-                $ref: "./examples/retrieveSelfAssementChargeHistory/def1/response.json"
+              externalValue: "./examples/retrieveSelfAssementChargeHistory/def1/response.json"
 
     "400":
       description: Bad request
