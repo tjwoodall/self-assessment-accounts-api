@@ -85,6 +85,7 @@
         "penaltyCategory": "lpp1",
         "penaltyStatus": "accruing",
         "penaltyAmountAccruing": 4018,
+        
         "penaltyAmountPosted": 1045.1,
         "penaltyAmountPaid": 4507.2,
         "penaltyAmountOutstanding": 7014.84,
@@ -106,9 +107,11 @@
           }
         ],
         "principalChargeDocNumber": "123456789012",
+        
         "principalChargeBillingFrom": "2024-07-01",
         "principalChargeBillingTo": "2024-09-30",
         "principalChargeDueDate": "2024-11-07",
+        
         "principalChargeLatestClearing": "2025-02-15",
         "timeToPay": [
           {
@@ -116,6 +119,7 @@
             "endDate": "2025-06-15"
           }
         ]
+        
       }
     ]
   }
